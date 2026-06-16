@@ -1,0 +1,15 @@
+# Cloudflare Pages config (config-as-code). Lets `wrangler pages dev` run the
+# static site + Functions locally, and documents the deploy settings the
+# Cloudflare dashboard otherwise asks for. Free tier — static assets are
+# unlimited; the /functions handler runs on the Workers free plan (100k req/day).
+name = "aso-public"
+pages_build_output_dir = "dist"
+compatibility_date = "2026-06-01"
+
+# Optional runtime config for functions/api/trial.js. Set the real values as
+# Pages environment variables in the Cloudflare dashboard (Settings → Variables);
+# both are optional — without them the form still works (no lead forwarded, and
+# it hands off to the default app signup URL).
+# [vars]
+# LEAD_WEBHOOK_URL = "https://hooks.example.com/your-lead-webhook"
+# APP_SIGNUP_URL   = "https://artemissmiles.artemisorthoapp.com/signup"

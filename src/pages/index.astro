@@ -1,0 +1,119 @@
+---
+import Base from "../layouts/Base.astro";
+import DashboardMock from "../components/DashboardMock.astro";
+
+const highlights = [
+  {
+    title: "A briefing, not a dashboard",
+    body: "Each morning Artemis reads the overnight changes and hands you three things to act on — sentence headlines with the number in them, like “8 contracts unsigned > 7 days — $94k at risk.” Never a wall of charts.",
+  },
+  {
+    title: "Ortho-real KPIs",
+    body: "Same-day-start rate, pending-contract aging, average case value, chair utilization, AR aging by payer, and rolling-30-day no-shows — the metrics that move an ortho practice, not generic SaaS vanity numbers.",
+  },
+  {
+    title: "Ask in plain English",
+    body: "Press ⌘K anywhere and ask Artemis: “Which payers are slowest to pay?” or “Who do I follow up with to close cases this week?” By voice on the go, too.",
+  },
+  {
+    title: "Automations with a human in the loop",
+    body: "When Artemis spots a recurring pattern it proposes an automation with a confidence score. Every one is reversible, and no patient is ever texted or emailed without staff sign-off.",
+  },
+];
+
+const personas = [
+  { who: "Doctor / Owner", q: "“Is the practice healthy, and what do I need to decide today?”" },
+  { who: "Office Manager", q: "“What’s about to fall through the cracks?”" },
+  { who: "Treatment Coordinator", q: "“Who do I follow up with to close cases this week?”" },
+  { who: "Patient Coordinator", q: "“Who’s coming in, who hasn’t confirmed, who do I call?”" },
+];
+---
+
+<Base>
+  <!-- Hero -->
+  <section class="relative overflow-hidden">
+    <div
+      class="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-brand-50 to-white"
+    >
+    </div>
+    <div class="container-page py-20 sm:py-28">
+      <div class="mx-auto max-w-3xl text-center">
+        <p class="eyebrow">For orthodontic practices</p>
+        <h1 class="mt-3 font-display text-4xl font-bold tracking-tight text-ink sm:text-6xl">
+          Run your practice from a single, calm screen.
+        </h1>
+        <p class="mx-auto mt-6 max-w-2xl text-lg text-ink-soft">
+          Artemis reads your practice-management data overnight and hands your team a
+          short morning briefing — the contracts aging out, the channel bleeding money,
+          the chairs sitting empty — so the day starts with decisions, not spreadsheets.
+        </p>
+        <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <a href="/signup" class="btn-primary px-6 py-3 text-base">Start free trial</a>
+          <a href="/features" class="btn-outline px-6 py-3 text-base">See features</a>
+        </div>
+        <p class="mt-4 text-xs text-ink-soft">No credit card required · Setup in a day</p>
+      </div>
+
+      <!-- Product preview: the Today briefing -->
+      <div class="mx-auto mt-14 max-w-4xl">
+        <DashboardMock />
+        <p class="mt-3 text-center text-xs text-ink-soft">The Today view — a representative look at the briefing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Highlights -->
+  <section class="container-page py-16 sm:py-20">
+    <div class="grid gap-6 sm:grid-cols-2">
+      {highlights.map((h) => (
+        <div class="rounded-2xl border border-brand-100 bg-white p-7 shadow-sm transition-shadow hover:shadow-md">
+          <h2 class="font-display text-xl font-semibold text-ink">{h.title}</h2>
+          <p class="mt-2 text-ink-soft">{h.body}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Personas -->
+  <section class="container-page pb-4">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="font-display text-3xl font-bold text-ink">One screen, answered for each role</h2>
+      <p class="mt-3 text-ink-soft">
+        Today shows everyone the same calm layout — the briefing just answers the
+        question each role actually asks.
+      </p>
+    </div>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2">
+      {personas.map((p) => (
+        <div class="rounded-2xl border border-brand-100 bg-white p-6">
+          <p class="text-sm font-semibold text-brand-700">{p.who}</p>
+          <p class="mt-1 text-lg text-ink">{p.q}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
+  <!-- Tiers teaser -->
+  <section class="mt-12 border-y border-brand-100 bg-brand-50/40">
+    <div class="container-page py-16 text-center sm:py-20">
+      <h2 class="font-display text-3xl font-bold text-ink">Pricing that grows with you</h2>
+      <p class="mx-auto mt-3 max-w-xl text-ink-soft">
+        Start on a single office and scale to a multi-location group — same dashboard,
+        more horsepower.
+      </p>
+      <a href="/pricing" class="btn-primary mt-7 px-6 py-3 text-base">View pricing</a>
+    </div>
+  </section>
+
+  <!-- Final CTA -->
+  <section class="container-page py-20 text-center">
+    <h2 class="font-display text-3xl font-bold text-ink sm:text-4xl">
+      See it on your own numbers.
+    </h2>
+    <p class="mx-auto mt-3 max-w-xl text-ink-soft">
+      Connect your practice management system and watch your funnel, schedule, and
+      financials come to life.
+    </p>
+    <a href="/signup" class="btn-primary mt-7 px-6 py-3 text-base">Start free trial</a>
+  </section>
+</Base>
