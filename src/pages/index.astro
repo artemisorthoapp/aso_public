@@ -1,26 +1,32 @@
 ---
 import Base from "../layouts/Base.astro";
+import DashboardMock from "../components/DashboardMock.astro";
 
 const highlights = [
   {
-    title: "Today, in one glance",
-    body: "A role-aware morning briefing surfaces what changed overnight and what needs a human today — no dashboard spelunking.",
+    title: "A briefing, not a dashboard",
+    body: "Each morning Artemis reads the overnight changes and hands you three things to act on — sentence headlines with the number in them, like “8 contracts unsigned > 7 days — $94k at risk.” Never a wall of charts.",
   },
   {
-    title: "A live treatment funnel",
-    body: "From new lead to signed contract, see every stage, where patients are aging, and the exact value sitting in your pipeline.",
+    title: "Ortho-real KPIs",
+    body: "Same-day-start rate, pending-contract aging, average case value, chair utilization, AR aging by payer, and rolling-30-day no-shows — the metrics that move an ortho practice, not generic SaaS vanity numbers.",
   },
   {
-    title: "The money, honestly",
-    body: "Production vs. target, cash flow, and AR aging by payer — the numbers that actually move the practice, updated continuously.",
+    title: "Ask in plain English",
+    body: "Press ⌘K anywhere and ask Artemis: “Which payers are slowest to pay?” or “Who do I follow up with to close cases this week?” By voice on the go, too.",
   },
   {
-    title: "Chair & team operations",
-    body: "Utilization heatmaps, no-show trends over a rolling 30 days, and the staffing picture behind your schedule.",
+    title: "Automations with a human in the loop",
+    body: "When Artemis spots a recurring pattern it proposes an automation with a confidence score. Every one is reversible, and no patient is ever texted or emailed without staff sign-off.",
   },
 ];
 
-const verbs = ["Today", "People", "Growth", "Money", "Operations"];
+const personas = [
+  { who: "Doctor / Owner", q: "“Is the practice healthy, and what do I need to decide today?”" },
+  { who: "Office Manager", q: "“What’s about to fall through the cracks?”" },
+  { who: "Treatment Coordinator", q: "“Who do I follow up with to close cases this week?”" },
+  { who: "Patient Coordinator", q: "“Who’s coming in, who hasn’t confirmed, who do I call?”" },
+];
 ---
 
 <Base>
@@ -37,9 +43,9 @@ const verbs = ["Today", "People", "Growth", "Money", "Operations"];
           Run your practice from a single, calm screen.
         </h1>
         <p class="mx-auto mt-6 max-w-2xl text-lg text-ink-soft">
-          Artemis pulls your practice-management data into a daily briefing, a live
-          treatment funnel, and the financials that matter — so your team spends
-          time on patients, not spreadsheets.
+          Artemis reads your practice-management data overnight and hands your team a
+          short morning briefing — the contracts aging out, the channel bleeding money,
+          the chairs sitting empty — so the day starts with decisions, not spreadsheets.
         </p>
         <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
           <a href="/signup" class="btn-primary px-6 py-3 text-base">Start free trial</a>
@@ -48,13 +54,10 @@ const verbs = ["Today", "People", "Growth", "Money", "Operations"];
         <p class="mt-4 text-xs text-ink-soft">No credit card required · Setup in a day</p>
       </div>
 
-      <!-- The 5 verbs strip -->
-      <div class="mx-auto mt-14 flex max-w-2xl flex-wrap items-center justify-center gap-2">
-        {verbs.map((v) => (
-          <span class="rounded-full border border-brand-200 bg-white px-4 py-1.5 text-sm font-medium text-brand-700">
-            {v}
-          </span>
-        ))}
+      <!-- Product preview: the Today briefing -->
+      <div class="mx-auto mt-14 max-w-4xl">
+        <DashboardMock />
+        <p class="mt-3 text-center text-xs text-ink-soft">The Today view — a representative look at the briefing.</p>
       </div>
     </div>
   </section>
@@ -71,8 +74,27 @@ const verbs = ["Today", "People", "Growth", "Money", "Operations"];
     </div>
   </section>
 
+  <!-- Personas -->
+  <section class="container-page pb-4">
+    <div class="mx-auto max-w-2xl text-center">
+      <h2 class="font-display text-3xl font-bold text-ink">One screen, answered for each role</h2>
+      <p class="mt-3 text-ink-soft">
+        Today shows everyone the same calm layout — the briefing just answers the
+        question each role actually asks.
+      </p>
+    </div>
+    <div class="mt-8 grid gap-4 sm:grid-cols-2">
+      {personas.map((p) => (
+        <div class="rounded-2xl border border-brand-100 bg-white p-6">
+          <p class="text-sm font-semibold text-brand-700">{p.who}</p>
+          <p class="mt-1 text-lg text-ink">{p.q}</p>
+        </div>
+      ))}
+    </div>
+  </section>
+
   <!-- Tiers teaser -->
-  <section class="border-y border-brand-100 bg-brand-50/40">
+  <section class="mt-12 border-y border-brand-100 bg-brand-50/40">
     <div class="container-page py-16 text-center sm:py-20">
       <h2 class="font-display text-3xl font-bold text-ink">Pricing that grows with you</h2>
       <p class="mx-auto mt-3 max-w-xl text-ink-soft">

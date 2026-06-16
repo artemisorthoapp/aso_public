@@ -1,0 +1,99 @@
+---
+// Compact, representative mini-mocks per verb, mirroring the real dashboard
+// surfaces (DESIGN_CONSTITUTION §14, §20, §27). Selected by `verb`.
+interface Props { verb: string }
+const { verb } = Astro.props;
+
+const funnel = [
+  { stage: "Exam scheduled", count: 42, w: "92%", tone: "" },
+  { stage: "Exam done", count: 31, w: "70%", tone: "" },
+  { stage: "Contract presented", count: 18, w: "44%", tone: "amber" },
+  { stage: "Contract signed", count: 11, w: "26%", tone: "" },
+  { stage: "Started", count: 9, w: "20%", tone: "" },
+];
+
+const channels = [
+  { name: "Referrals", roi: "6.4×", tone: "good" },
+  { name: "Google Ads", roi: "2.1×", tone: "warn" },
+  { name: "Yelp", roi: "0.7×", tone: "danger" },
+];
+
+const ar = [
+  { b: "0–30", w: "85%" },
+  { b: "31–60", w: "55%" },
+  { b: "61–90", w: "32%" },
+  { b: "120+", w: "18%" },
+];
+
+const heat = [
+  "good","good","mid","good","hot","mid","low",
+  "mid","good","hot","good","good","mid","low",
+  "good","mid","good","hot","good","low","mid",
+];
+const heatColor = {
+  low: "bg-brand-100",
+  mid: "bg-brand-300",
+  good: "bg-brand-500",
+  hot: "bg-rose-400",
+};
+const dotTone = { amber: "bg-amber-400", "": "bg-brand-300" };
+const roiTone = { good: "bg-brand-100 text-brand-700", warn: "bg-amber-100 text-amber-700", danger: "bg-rose-100 text-rose-700" };
+---
+
+<div class="flex h-full flex-col justify-center rounded-xl bg-gradient-to-br from-brand-50 to-brand-100/40 p-5 ring-1 ring-brand-100">
+  {verb === "Today" && (
+    <div class="space-y-2">
+      <p class="text-xs font-semibold text-ink">Three things need you today.</p>
+      <div class="flex gap-2 rounded-lg bg-white p-2.5"><span class="w-1 rounded bg-rose-500"></span><p class="text-[11px] text-ink">8 contracts unsigned &gt; 7 days — <b>$94k</b> at risk.</p></div>
+      <div class="flex gap-2 rounded-lg bg-white p-2.5"><span class="w-1 rounded bg-brand-500"></span><p class="text-[11px] text-ink">Same-day start rate hit <b>71%</b>, up from 58%.</p></div>
+    </div>
+  )}
+
+  {verb === "People" && (
+    <div class="space-y-1.5">
+      {funnel.map((f) => (
+        <div class="flex items-center gap-2 rounded-lg bg-white px-2.5 py-1.5">
+          <span class="w-28 shrink-0 text-[11px] text-ink">{f.stage}</span>
+          <span class="h-2 flex-1 overflow-hidden rounded-full bg-brand-50"><span class="block h-full rounded-full bg-brand-400" style={`width:${f.w}`}></span></span>
+          <span class="w-5 text-right text-[11px] font-semibold tabular-nums text-ink">{f.count}</span>
+          <span class:list={["h-2 w-2 rounded-full", dotTone[f.tone]]}></span>
+        </div>
+      ))}
+    </div>
+  )}
+
+  {verb === "Growth" && (
+    <div class="space-y-2">
+      {channels.map((c) => (
+        <div class="flex items-center justify-between rounded-lg bg-white px-3 py-2">
+          <span class="text-xs text-ink">{c.name}</span>
+          <span class:list={["rounded-full px-2 py-0.5 text-[11px] font-semibold", roiTone[c.tone]]}>{c.roi} ROI</span>
+        </div>
+      ))}
+      <p class="text-[10px] text-ink-soft">Yelp is bleeding money — double down on referrals.</p>
+    </div>
+  )}
+
+  {verb === "Money" && (
+    <div class="space-y-2">
+      <p class="text-[11px] font-semibold text-ink">AR aging by bucket</p>
+      {ar.map((a) => (
+        <div class="flex items-center gap-2">
+          <span class="w-12 text-[11px] tabular-nums text-ink-soft">{a.b}</span>
+          <span class="h-3 flex-1 overflow-hidden rounded bg-white"><span class="block h-full rounded bg-brand-500" style={`width:${a.w}`}></span></span>
+        </div>
+      ))}
+    </div>
+  )}
+
+  {verb === "Operations" && (
+    <div>
+      <p class="mb-2 text-[11px] font-semibold text-ink">Chair utilization · last 3 days</p>
+      <div class="grid grid-cols-7 gap-1">
+        {heat.map((h) => (
+          <span class:list={["aspect-square rounded", heatColor[h]]}></span>
+        ))}
+      </div>
+    </div>
+  )}
+</div>
