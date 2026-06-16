@@ -1,0 +1,86 @@
+---
+import Base from "../layouts/Base.astro";
+
+const features = [
+  {
+    verb: "Today",
+    title: "A briefing that thinks for you",
+    body: "Every morning, Artemis reads the overnight changes and assembles a role-aware briefing: the exams that need confirming, the contracts aging past threshold, and the quiet wins worth celebrating.",
+    points: ["Role-aware (Doctor, OM, TC, Coordinator)", "What changed / what's next", "Anomaly-driven, not noise"],
+  },
+  {
+    verb: "People",
+    title: "The treatment funnel, end to end",
+    body: "Follow every patient from new lead through exam, consult, and signed contract. See where people are aging and the exact case value sitting at each stage.",
+    points: ["Per-stage counts + aging flags", "Pipeline value by case", "Drill into any patient"],
+  },
+  {
+    verb: "Growth",
+    title: "Know what's actually driving starts",
+    body: "A channel scoreboard ties leads, referrals, reviews, and campaigns back to the starts they produce — so marketing spend follows results.",
+    points: ["Lead + referral tracking", "Review campaigns", "Local SEO & GMB signals"],
+  },
+  {
+    verb: "Money",
+    title: "Production, collections, and AR — straight",
+    body: "Daily and monthly production against target, cash flow, and AR aging broken down by payer. The honest financial picture, continuously updated.",
+    points: ["Production vs. target", "AR aging 30/60/90 by payer", "Cash flow at a glance"],
+  },
+  {
+    verb: "Operations",
+    title: "Chairs, schedule, and team",
+    body: "Chair-utilization heatmaps by doctor, no-show rates over a rolling 30 days, and the staffing picture behind every day on the calendar.",
+    points: ["Chair utilization heatmap", "Rolling 30-day no-show rate", "People roster & scheduling"],
+  },
+];
+---
+
+<Base title="Features — Artemis">
+  <section class="container-page py-16 text-center sm:py-20">
+    <p class="eyebrow">Features</p>
+    <h1 class="mt-3 font-display text-4xl font-bold tracking-tight text-ink sm:text-5xl">
+      Five verbs. One practice, in focus.
+    </h1>
+    <p class="mx-auto mt-5 max-w-2xl text-lg text-ink-soft">
+      Artemis is organized around what a practice actually does each day —
+      Today, People, Growth, Money, and Operations.
+    </p>
+  </section>
+
+  <section class="container-page space-y-6 pb-20">
+    {features.map((f, i) => (
+      <article
+        class:list={[
+          "grid items-center gap-8 rounded-2xl border border-brand-100 bg-white p-8 shadow-sm sm:p-10 lg:grid-cols-2",
+          i % 2 === 1 ? "lg:[&>div:first-child]:order-2" : "",
+        ]}
+      >
+        <div>
+          <span class="eyebrow">{f.verb}</span>
+          <h2 class="mt-2 font-display text-2xl font-semibold text-ink">{f.title}</h2>
+          <p class="mt-3 text-ink-soft">{f.body}</p>
+          <ul class="mt-5 space-y-2">
+            {f.points.map((p) => (
+              <li class="flex items-start gap-2 text-sm text-ink">
+                <span class="mt-1 grid h-4 w-4 shrink-0 place-items-center rounded-full bg-brand-100 text-brand-700">✓</span>
+                {p}
+              </li>
+            ))}
+          </ul>
+        </div>
+        <div class="aspect-[4/3] rounded-xl bg-gradient-to-br from-brand-50 to-brand-100/60 ring-1 ring-brand-100">
+          <div class="flex h-full items-center justify-center text-sm font-medium text-brand-600">
+            {f.verb} preview
+          </div>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <section class="border-t border-brand-100 bg-brand-50/40">
+    <div class="container-page py-16 text-center">
+      <h2 class="font-display text-3xl font-bold text-ink">Ready to see it on your data?</h2>
+      <a href="/signup" class="btn-primary mt-6 px-6 py-3 text-base">Start free trial</a>
+    </div>
+  </section>
+</Base>
