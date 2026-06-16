@@ -39,20 +39,38 @@ public/                      # favicon + static assets
 
 Add a page by dropping a `.astro` file in `src/pages/` — the route follows the filename.
 
-## Deploy — Cloudflare Pages
+## Deploy — Cloudflare Pages (free tier)
 
 Connect the repo in the Cloudflare dashboard (Workers & Pages → Create → Pages →
-connect to Git) with:
+connect to Git). Settings (also captured in `wrangler.toml`):
 
 - **Build command:** `npm run build`
 - **Build output directory:** `dist`
 - **Production branch:** `main`
 
-Cloudflare auto-builds on push and gives every branch/PR a preview URL. No adapter
-is needed — the site is fully static.
+Cloudflare auto-builds on push and gives every branch/PR a preview URL. Static
+assets are unlimited on the free plan; the one Function below runs on the
+Workers free plan (100k req/day) — far beyond a marketing form's needs. No
+adapter is needed (static output).
 
-## Forms / backend (TODO)
+## Forms — signup lead capture (Pages Function)
 
-`signup.astro` currently hands off to the dashboard app's signup. To capture
-leads on this site instead, wire the form `action` to a **Cloudflare Pages
-Function** (`functions/api/trial.js`) or a form provider (Formspree/HubSpot).
+`signup.astro` POSTs to `functions/api/trial.js` (route `POST /api/trial`). The
+Function validates the submission (with a honeypot for spam), optionally
+forwards the lead to a webhook, then 303-redirects the visitor to the dashboard
+app to finish account creation (email + plan prefilled).
+
+Optional Pages **environment variables** (Settings → Variables — both optional):
+
+| Var | Effect |
+|---|---|
+| `LEAD_WEBHOOK_URL` | If set, the lead JSON is POSTed here (Slack / Make / Zapier / CRM). |
+| `APP_SIGNUP_URL` | Override the app signup hand-off (default `https://artemissmiles.artemisorthoapp.com/signup`). |
+
+The form works with **no** variables set and **without JavaScript** (plain form
+POST → redirect). Test the Function locally:
+
+```bash
+npm run build
+npx wrangler pages dev dist   # serves site + functions at http://localhost:8788
+```

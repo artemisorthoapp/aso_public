@@ -21,3 +21,6 @@ pnpm-debug.log*
 # editor
 .vscode/
 .idea/
+
+# cloudflare wrangler local
+.wrangler/
