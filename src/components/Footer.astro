@@ -16,11 +16,20 @@ const cols = [
       { href: "mailto:hello@artemisorthoapp.com", label: "Contact" },
     ],
   },
+  {
+    // Canonical legal docs live in the product app (single source of truth);
+    // OAuth app reviewers (Google/Meta/TikTok) follow these from the homepage.
+    title: "Legal",
+    links: [
+      { href: "https://app.artemisorthoapp.com/privacy-policy", label: "Privacy Policy" },
+      { href: "https://app.artemisorthoapp.com/terms-of-service", label: "Terms of Service" },
+    ],
+  },
 ];
 ---
 
 <footer class="border-t border-brand-100 bg-brand-50/40">
-  <div class="container-page grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-4">
+  <div class="container-page grid gap-10 py-12 sm:grid-cols-2 lg:grid-cols-5">
     <div class="space-y-3">
       <a href="/" class="flex items-center gap-2 font-display text-lg font-bold text-ink">
         <span class="grid h-8 w-8 place-items-center rounded-lg bg-brand-500 text-white">A</span>
@@ -52,7 +61,7 @@ const cols = [
   </div>
 
   <div class="container-page flex flex-col items-center justify-between gap-2 border-t border-brand-100 py-6 text-xs text-ink-soft sm:flex-row">
-    <p>© {year} Artemis Smiles Orthodontics. All rights reserved.</p>
+    <p>© {year} Artemis Ortho App LLC. All rights reserved.</p>
     <p>Built for orthodontic teams.</p>
   </div>
 </footer>
