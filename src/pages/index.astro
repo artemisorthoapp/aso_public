@@ -1,119 +1,365 @@
 ---
-import Base from "../layouts/Base.astro";
-import DashboardMock from "../components/DashboardMock.astro";
-
-const highlights = [
-  {
-    title: "A briefing, not a dashboard",
-    body: "Each morning Artemis reads the overnight changes and hands you three things to act on — sentence headlines with the number in them, like “8 contracts unsigned > 7 days — $94k at risk.” Never a wall of charts.",
-  },
-  {
-    title: "Ortho-real KPIs",
-    body: "Same-day-start rate, pending-contract aging, average case value, chair utilization, AR aging by payer, and rolling-30-day no-shows — the metrics that move an ortho practice, not generic SaaS vanity numbers.",
-  },
-  {
-    title: "Ask in plain English",
-    body: "Press ⌘K anywhere and ask Artemis: “Which payers are slowest to pay?” or “Who do I follow up with to close cases this week?” By voice on the go, too.",
-  },
-  {
-    title: "Automations with a human in the loop",
-    body: "When Artemis spots a recurring pattern it proposes an automation with a confidence score. Every one is reversible, and no patient is ever texted or emailed without staff sign-off.",
-  },
-];
-
-const personas = [
-  { who: "Doctor / Owner", q: "“Is the practice healthy, and what do I need to decide today?”" },
-  { who: "Office Manager", q: "“What’s about to fall through the cracks?”" },
-  { who: "Treatment Coordinator", q: "“Who do I follow up with to close cases this week?”" },
-  { who: "Patient Coordinator", q: "“Who’s coming in, who hasn’t confirmed, who do I call?”" },
-];
+// Landing page — ported from the "Artemis Ortho website redesign" Claude Design
+// doc ("Artemis Ortho Website.dc.html"). Self-contained single-page design with
+// its own fixed nav + footer, so it intentionally does NOT use Base/Nav/Footer.
+// The Claude-Design runtime (<x-dc>, support.js, _ds stylesheet, DCLogic) has
+// been stripped; the signup form posts to the real /api/trial Pages Function and
+// scroll-reveal runs as a plain client script.
+const title = "Artemis Ortho App — your whole practice, briefed by morning";
+const description =
+  "Artemis reads your Cloud 9 data overnight — verifies insurance, reconciles the day, and hands your team the three things that actually need them. A briefing, not a dashboard.";
+const canonical = new URL("/", Astro.site).href;
 ---
 
-<Base>
-  <!-- Hero -->
-  <section class="relative overflow-hidden">
-    <div
-      class="pointer-events-none absolute inset-0 -z-10 bg-gradient-to-b from-brand-50 to-white"
-    >
-    </div>
-    <div class="container-page py-20 sm:py-28">
-      <div class="mx-auto max-w-3xl text-center">
-        <p class="eyebrow">For orthodontic practices</p>
-        <h1 class="mt-3 font-display text-4xl font-bold tracking-tight text-ink sm:text-6xl">
-          Run your practice from a single, calm screen.
-        </h1>
-        <p class="mx-auto mt-6 max-w-2xl text-lg text-ink-soft">
-          Artemis reads your practice-management data overnight and hands your team a
-          short morning briefing — the contracts aging out, the channel bleeding money,
-          the chairs sitting empty — so the day starts with decisions, not spreadsheets.
-        </p>
-        <div class="mt-9 flex flex-col items-center justify-center gap-3 sm:flex-row">
-          <a href="/signup" class="btn-primary px-6 py-3 text-base">Start free trial</a>
-          <a href="/features" class="btn-outline px-6 py-3 text-base">See features</a>
-        </div>
-        <p class="mt-4 text-xs text-ink-soft">No credit card required · Setup in a day</p>
-      </div>
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/png" href="/artemis-icon.png" />
+    <link rel="canonical" href={canonical} />
 
-      <!-- Product preview: the Today briefing -->
-      <div class="mx-auto mt-14 max-w-4xl">
-        <DashboardMock />
-        <p class="mt-3 text-center text-xs text-ink-soft">The Today view — a representative look at the briefing.</p>
-      </div>
-    </div>
-  </section>
+    <title>{title}</title>
+    <meta name="description" content={description} />
 
-  <!-- Highlights -->
-  <section class="container-page py-16 sm:py-20">
-    <div class="grid gap-6 sm:grid-cols-2">
-      {highlights.map((h) => (
-        <div class="rounded-2xl border border-brand-100 bg-white p-7 shadow-sm transition-shadow hover:shadow-md">
-          <h2 class="font-display text-xl font-semibold text-ink">{h.title}</h2>
-          <p class="mt-2 text-ink-soft">{h.body}</p>
-        </div>
-      ))}
-    </div>
-  </section>
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonical} />
+    <meta name="twitter:card" content="summary_large_image" />
 
-  <!-- Personas -->
-  <section class="container-page pb-4">
-    <div class="mx-auto max-w-2xl text-center">
-      <h2 class="font-display text-3xl font-bold text-ink">One screen, answered for each role</h2>
-      <p class="mt-3 text-ink-soft">
-        Today shows everyone the same calm layout — the briefing just answers the
-        question each role actually asks.
-      </p>
-    </div>
-    <div class="mt-8 grid gap-4 sm:grid-cols-2">
-      {personas.map((p) => (
-        <div class="rounded-2xl border border-brand-100 bg-white p-6">
-          <p class="text-sm font-semibold text-brand-700">{p.who}</p>
-          <p class="mt-1 text-lg text-ink">{p.q}</p>
-        </div>
-      ))}
-    </div>
-  </section>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Karla:wght@300;400;500;600;700;800&family=Philosopher:wght@400;700&display=swap"
+    />
 
-  <!-- Tiers teaser -->
-  <section class="mt-12 border-y border-brand-100 bg-brand-50/40">
-    <div class="container-page py-16 text-center sm:py-20">
-      <h2 class="font-display text-3xl font-bold text-ink">Pricing that grows with you</h2>
-      <p class="mx-auto mt-3 max-w-xl text-ink-soft">
-        Start on a single office and scale to a multi-location group — same dashboard,
-        more horsepower.
-      </p>
-      <a href="/pricing" class="btn-primary mt-7 px-6 py-3 text-base">View pricing</a>
-    </div>
-  </section>
+    <style is:global>
+      html { scroll-behavior:smooth; }
+      body { margin:0; background:#fff; font-family:'Karla',system-ui,sans-serif; color:#24232D; -webkit-font-smoothing:antialiased; }
+      @keyframes ao-float { 0%,100%{ transform:translateY(0); } 50%{ transform:translateY(-12px); } }
+      @keyframes ao-mesh { 0%{ transform:translate(0,0) scale(1);} 50%{ transform:translate(4%,3%) scale(1.12);} 100%{ transform:translate(0,0) scale(1);} }
+      @keyframes ao-mesh2 { 0%{ transform:translate(0,0) scale(1.1);} 50%{ transform:translate(-5%,-3%) scale(1);} 100%{ transform:translate(0,0) scale(1.1);} }
+      @keyframes ao-pulse { 0%,100%{ opacity:.55;} 50%{ opacity:1;} }
+      @keyframes ao-shimmer { 0%{ background-position:-200% 0;} 100%{ background-position:200% 0;} }
+      @keyframes ao-blink { 0%,49%{ opacity:1;} 50%,100%{ opacity:0;} }
+      @keyframes ao-rise { 0%{ transform:translateY(8px); opacity:0;} 100%{ transform:translateY(0); opacity:1;} }
+      @keyframes ao-bar { 0%{ transform:scaleY(.2);} 100%{ transform:scaleY(1);} }
+    </style>
+    <noscript><style>[data-reveal]{opacity:1 !important; transform:none !important;}</style></noscript>
+  </head>
+  <body>
 
-  <!-- Final CTA -->
-  <section class="container-page py-20 text-center">
-    <h2 class="font-display text-3xl font-bold text-ink sm:text-4xl">
-      See it on your own numbers.
-    </h2>
-    <p class="mx-auto mt-3 max-w-xl text-ink-soft">
-      Connect your practice management system and watch your funnel, schedule, and
-      financials come to life.
+<div style="overflow-x:hidden;">
+
+<!-- ===== NAV ===== -->
+<nav style="position:fixed; top:0; left:0; right:0; z-index:100; backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); background:rgba(255,255,255,0.72); border-bottom:1px solid rgba(36,35,45,0.07);">
+  <div style="max-width:1120px; margin:0 auto; height:54px; padding:0 24px; display:flex; align-items:center; justify-content:space-between;">
+    <a href="#top" style="display:flex; align-items:center; gap:10px; text-decoration:none;">
+      <img src="/artemis-icon.png" alt="Artemis" style="height:26px; width:auto; display:block;">
+      <span style="font-family:'Philosopher',serif; font-weight:700; font-size:17px; color:#24232D; letter-spacing:.2px;">Artemis <span style="color:#67A4A1;">Ortho App</span></span>
+    </a>
+    <div style="display:flex; align-items:center; gap:28px;">
+      <a href="#features" style="font-size:13px; font-weight:600; color:#494E63; text-decoration:none;">Features</a>
+      <a href="#product" style="font-size:13px; font-weight:600; color:#494E63; text-decoration:none;">Product</a>
+      <a href="#results" style="font-size:13px; font-weight:600; color:#494E63; text-decoration:none;">Results</a>
+      <a href="#demo" style="display:inline-flex; align-items:center; padding:7px 16px; border-radius:980px; background:#67A4A1; color:#fff; font-size:13px; font-weight:800; text-decoration:none;">Sign up free</a>
+    </div>
+  </div>
+</nav>
+
+<!-- ===== HERO ===== -->
+<section id="top" style="position:relative; background:#16161C; color:#fff; padding:140px 24px 80px; overflow:hidden;">
+  <div style="position:absolute; inset:0; overflow:hidden; z-index:0;">
+    <div style="position:absolute; top:-20%; left:-10%; width:70%; height:90%; background:radial-gradient(closest-side, rgba(105,201,204,0.45), transparent 70%); filter:blur(40px); animation:ao-mesh 18s ease-in-out infinite;"></div>
+    <div style="position:absolute; bottom:-30%; right:-15%; width:75%; height:100%; background:radial-gradient(closest-side, rgba(103,164,161,0.5), transparent 70%); filter:blur(50px); animation:ao-mesh2 22s ease-in-out infinite;"></div>
+    <div style="position:absolute; top:30%; right:25%; width:40%; height:50%; background:radial-gradient(closest-side, rgba(237,131,209,0.18), transparent 70%); filter:blur(50px); animation:ao-mesh 26s ease-in-out infinite;"></div>
+  </div>
+
+  <div style="position:relative; z-index:1; max-width:920px; margin:0 auto; text-align:center;">
+    <div data-reveal style="opacity:0; transform:translateY(24px); transition:all .8s cubic-bezier(0.16,1,0.3,1); display:inline-flex; align-items:center; gap:8px; padding:6px 14px; border-radius:980px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.14); font-size:12px; font-weight:700; letter-spacing:.04em; color:#B4E3E5; margin-bottom:28px;">
+      <span style="width:6px; height:6px; border-radius:50%; background:#69C9CC; box-shadow:0 0 8px #69C9CC;"></span>
+      OFFICIAL CLOUD 9 ORTHO PARTNER
+    </div>
+    <h1 data-reveal style="opacity:0; transform:translateY(24px); transition:all .8s cubic-bezier(0.16,1,0.3,1) .08s; font-family:'Philosopher',serif; font-weight:700; font-size:clamp(44px,7vw,84px); line-height:1.02; letter-spacing:-0.02em; margin:0 0 22px;">
+      Your whole practice,<br><span style="background:linear-gradient(120deg,#69C9CC,#67A4A1 55%,#B4E3E5); -webkit-background-clip:text; background-clip:text; color:transparent;">briefed by morning.</span>
+    </h1>
+    <p data-reveal style="opacity:0; transform:translateY(24px); transition:all .8s cubic-bezier(0.16,1,0.3,1) .16s; font-size:clamp(17px,2.2vw,22px); line-height:1.5; color:rgba(255,255,255,0.72); max-width:660px; margin:0 auto 36px;">
+      Artemis reads Cloud 9 overnight — verifies insurance, reconciles the day, and hands your team the three things that actually need them. No dashboards to dig through. No double entry.
     </p>
-    <a href="/signup" class="btn-primary mt-7 px-6 py-3 text-base">Start free trial</a>
-  </section>
-</Base>
+    <div data-reveal style="opacity:0; transform:translateY(24px); transition:all .8s cubic-bezier(0.16,1,0.3,1) .24s; display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+      <a href="#demo" style="display:inline-flex; align-items:center; padding:13px 28px; border-radius:980px; background:#67A4A1; color:#fff; font-size:16px; font-weight:800; text-decoration:none; box-shadow:0 8px 30px rgba(103,164,161,0.4);">Sign up free</a>
+      <a href="#features" style="display:inline-flex; align-items:center; gap:6px; padding:13px 24px; border-radius:980px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18); color:#fff; font-size:16px; font-weight:700; text-decoration:none;">See how it works →</a>
+    </div>
+  </div>
+
+  <!-- App demo mockup -->
+  <div data-reveal style="opacity:0; transform:translateY(40px); transition:all 1s cubic-bezier(0.16,1,0.3,1) .3s; position:relative; z-index:1; max-width:980px; margin:64px auto 0;">
+    <div style="animation:ao-float 7s ease-in-out infinite;">
+      <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); border-radius:18px; padding:10px; box-shadow:0 40px 90px rgba(0,0,0,0.5);">
+        <div style="background:#FBFBFC; border-radius:11px; overflow:hidden;">
+          <!-- app top bar -->
+          <div style="display:flex; align-items:center; gap:8px; padding:13px 18px; border-bottom:1px solid #EEE; background:#fff;">
+            <span style="width:11px; height:11px; border-radius:50%; background:#FF5F57;"></span>
+            <span style="width:11px; height:11px; border-radius:50%; background:#FEBC2E;"></span>
+            <span style="width:11px; height:11px; border-radius:50%; background:#28C840;"></span>
+            <div style="flex:1; text-align:center; font-size:12px; color:#9CA3AF; font-weight:600;">app.artemisorthoapp.com</div>
+          </div>
+          <div style="display:grid; grid-template-columns:200px 1fr; min-height:430px;">
+            <!-- sidebar -->
+            <div style="background:#1F2230; padding:18px 14px; color:#fff;">
+              <div style="display:flex; align-items:center; gap:8px; margin-bottom:24px;">
+                <img src="/artemis-icon.png" style="height:22px; filter:brightness(0) invert(1);">
+                <span style="font-family:'Philosopher',serif; font-weight:700; font-size:14px;">Artemis</span>
+              </div>
+              <div style="display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:8px; background:#67A4A1; font-size:13px; font-weight:700; margin-bottom:4px;"><span>◆</span> Briefing</div>
+              <div style="display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:8px; color:rgba(255,255,255,0.6); font-size:13px; margin-bottom:4px;"><span>▤</span> Treatment funnel</div>
+              <div style="display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:8px; color:rgba(255,255,255,0.6); font-size:13px; margin-bottom:4px;"><span>◇</span> KPIs</div>
+              <div style="display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:8px; color:rgba(255,255,255,0.6); font-size:13px; margin-bottom:4px;"><span>⟲</span> Automations</div>
+              <div style="margin-top:auto; padding-top:120px;">
+                <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:11px; font-size:11px; color:rgba(255,255,255,0.55); line-height:1.4;">Synced with Cloud 9<br><span style="color:#69C9CC; font-weight:700;">● 4 min ago</span></div>
+              </div>
+            </div>
+            <!-- main -->
+            <div style="padding:22px 24px; background:#FBFBFC; text-align:left;">
+              <div style="font-size:12px; color:#9CA3AF; font-weight:600; letter-spacing:.04em;">TUESDAY, JUNE 23</div>
+              <div style="font-family:'Philosopher',serif; font-weight:700; font-size:24px; color:#24232D; margin:2px 0 4px;">Good morning, Dr. Lane</div>
+              <div style="font-size:13px; color:#6B7280; margin-bottom:18px;">3 things need you today.</div>
+
+              <div style="display:flex; flex-direction:column; gap:10px;">
+                <div style="display:flex; gap:12px; align-items:flex-start; background:#fff; border:1px solid #EEE; border-left:3px solid #ED83D1; border-radius:10px; padding:13px 15px; animation:ao-rise .6s ease-out both;">
+                  <div style="width:30px; height:30px; border-radius:8px; background:#FCEBF7; display:flex; align-items:center; justify-content:center; color:#ED83D1; font-weight:800; flex-shrink:0;">!</div>
+                  <div><div style="font-size:13px; font-weight:700; color:#24232D;">2 contracts aging past 14 days</div><div style="font-size:12px; color:#6B7280;">$11,400 in pending starts. Tap to review &amp; nudge.</div></div>
+                </div>
+                <div style="display:flex; gap:12px; align-items:flex-start; background:#fff; border:1px solid #EEE; border-left:3px solid #67A4A1; border-radius:10px; padding:13px 15px; animation:ao-rise .6s ease-out .12s both;">
+                  <div style="width:30px; height:30px; border-radius:8px; background:#E0F5F5; display:flex; align-items:center; justify-content:center; color:#67A4A1; font-weight:800; flex-shrink:0;">↑</div>
+                  <div><div style="font-size:13px; font-weight:700; color:#24232D;">Same-day start rate up to 71%</div><div style="font-size:12px; color:#6B7280;">+9 pts vs last week. 4 exams convert-ready.</div></div>
+                </div>
+                <div style="display:flex; gap:12px; align-items:flex-start; background:#fff; border:1px solid #EEE; border-left:3px solid #696C8B; border-radius:10px; padding:13px 15px; animation:ao-rise .6s ease-out .24s both;">
+                  <div style="width:30px; height:30px; border-radius:8px; background:#EEE; display:flex; align-items:center; justify-content:center; color:#696C8B; font-weight:800; flex-shrink:0;">⟲</div>
+                  <div><div style="font-size:13px; font-weight:700; color:#24232D;">3 no-show recovery texts ready</div><div style="font-size:12px; color:#6B7280;">Drafted &amp; waiting for your one-tap approval.</div></div>
+                </div>
+              </div>
+
+              <div style="margin-top:18px; display:flex; align-items:center; gap:10px; background:#fff; border:1px solid #E5E7EB; border-radius:980px; padding:11px 16px;">
+                <span style="color:#67A4A1; font-weight:800;">✦</span>
+                <span style="font-size:13px; color:#9CA3AF;">Ask Artemis — “who hasn’t signed in 7+ days?”</span>
+                <span style="width:2px; height:15px; background:#67A4A1; animation:ao-blink 1.1s step-end infinite; margin-left:-4px;"></span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== TRUST STRIP ===== -->
+<section style="background:#fff; padding:46px 24px; border-bottom:1px solid #F2F0F3;">
+  <div data-reveal style="opacity:0; transform:translateY(20px); transition:all .7s cubic-bezier(0.16,1,0.3,1); max-width:1000px; margin:0 auto; display:flex; align-items:center; justify-content:center; gap:48px; flex-wrap:wrap; text-align:center;">
+    <div style="font-size:13px; font-weight:600; color:#9CA3AF; max-width:200px;">Connects directly to your Cloud 9 practice-management data</div>
+    <div style="display:flex; align-items:baseline; gap:8px;"><span style="font-family:'Philosopher',serif; font-weight:700; font-size:34px; color:#67A4A1;">6+</span><span style="font-size:13px; color:#6B7280; max-width:120px; text-align:left;">hours handed back per team, weekly</span></div>
+    <div style="display:flex; align-items:baseline; gap:8px;"><span style="font-family:'Philosopher',serif; font-weight:700; font-size:34px; color:#67A4A1;">0</span><span style="font-size:13px; color:#6B7280; max-width:120px; text-align:left;">manual eligibility calls</span></div>
+    <div style="display:flex; align-items:baseline; gap:8px;"><span style="font-family:'Philosopher',serif; font-weight:700; font-size:34px; color:#67A4A1;">3</span><span style="font-size:13px; color:#6B7280; max-width:120px; text-align:left;">things per role, every morning</span></div>
+  </div>
+</section>
+
+<!-- ===== FEATURES ===== -->
+<section id="features" style="background:#fff; padding:120px 24px 40px;">
+  <div data-reveal style="opacity:0; transform:translateY(24px); transition:all .8s cubic-bezier(0.16,1,0.3,1); max-width:780px; margin:0 auto 90px; text-align:center;">
+    <div style="font-size:13px; font-weight:800; letter-spacing:.08em; color:#67A4A1; text-transform:uppercase; margin-bottom:16px;">What Artemis does</div>
+    <h2 style="font-family:'Philosopher',serif; font-weight:700; font-size:clamp(32px,5vw,52px); line-height:1.06; letter-spacing:-0.02em; margin:0 0 18px; color:#24232D;">A briefing, not a dashboard.</h2>
+    <p style="font-size:19px; line-height:1.55; color:#6B7280; margin:0;">Staff spend time on patients, not paperwork. Here’s the layer working quietly underneath.</p>
+  </div>
+
+  <!-- feature rows -->
+  <div style="max-width:1080px; margin:0 auto; display:flex; flex-direction:column; gap:110px;">
+
+    <div data-reveal style="opacity:0; transform:translateY(40px); transition:all .9s cubic-bezier(0.16,1,0.3,1); display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+      <div>
+        <div style="font-size:13px; font-weight:800; letter-spacing:.06em; color:#ED83D1; text-transform:uppercase; margin-bottom:14px;">Per role, per morning</div>
+        <h3 style="font-family:'Philosopher',serif; font-weight:700; font-size:34px; line-height:1.1; letter-spacing:-0.01em; margin:0 0 16px; color:#24232D;">The three things that need you today.</h3>
+        <p style="font-size:17px; line-height:1.6; color:#6B7280; margin:0;">Every role opens to a short, ranked list — aging contracts, convert-ready exams, recovery texts waiting on a tap. No hunting through tabs. Just what moves the practice forward, prioritized.</p>
+      </div>
+      <div style="background:linear-gradient(160deg,#F2F0F3,#fff); border:1px solid #EEE; border-radius:18px; padding:24px; box-shadow:0 20px 50px rgba(36,35,45,0.07);">
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <div style="display:flex; gap:12px; align-items:center; background:#fff; border:1px solid #EEE; border-left:3px solid #ED83D1; border-radius:10px; padding:14px;"><div style="width:34px;height:34px;border-radius:9px;background:#FCEBF7;display:flex;align-items:center;justify-content:center;color:#ED83D1;font-weight:800;">!</div><div style="font-size:14px;font-weight:700;color:#24232D;">2 contracts aging 14+ days<div style="font-size:12px;font-weight:400;color:#9CA3AF;">$11,400 pending</div></div></div>
+          <div style="display:flex; gap:12px; align-items:center; background:#fff; border:1px solid #EEE; border-left:3px solid #67A4A1; border-radius:10px; padding:14px;"><div style="width:34px;height:34px;border-radius:9px;background:#E0F5F5;display:flex;align-items:center;justify-content:center;color:#67A4A1;font-weight:800;">↑</div><div style="font-size:14px;font-weight:700;color:#24232D;">4 exams convert-ready<div style="font-size:12px;font-weight:400;color:#9CA3AF;">Same-day start opportunity</div></div></div>
+          <div style="display:flex; gap:12px; align-items:center; background:#fff; border:1px solid #EEE; border-left:3px solid #696C8B; border-radius:10px; padding:14px;"><div style="width:34px;height:34px;border-radius:9px;background:#EEE;display:flex;align-items:center;justify-content:center;color:#696C8B;font-weight:800;">⟲</div><div style="font-size:14px;font-weight:700;color:#24232D;">3 recovery texts ready<div style="font-size:12px;font-weight:400;color:#9CA3AF;">Waiting on your approval</div></div></div>
+        </div>
+      </div>
+    </div>
+
+    <div data-reveal style="opacity:0; transform:translateY(40px); transition:all .9s cubic-bezier(0.16,1,0.3,1); display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+      <div style="order:2;">
+        <div style="font-size:13px; font-weight:800; letter-spacing:.06em; color:#67A4A1; text-transform:uppercase; margin-bottom:14px;">Ortho-real KPIs</div>
+        <h3 style="font-family:'Philosopher',serif; font-weight:700; font-size:34px; line-height:1.1; letter-spacing:-0.01em; margin:0 0 16px; color:#24232D;">Metrics that mean something in an ortho practice.</h3>
+        <p style="font-size:17px; line-height:1.6; color:#6B7280; margin:0;">Same-day start rate. Pending-contract aging. Chair utilization. Rolling-30 no-show. The numbers your practice actually runs on — not generic SaaS vanity metrics.</p>
+      </div>
+      <div style="order:1; background:#16161C; border-radius:18px; padding:26px; box-shadow:0 20px 50px rgba(36,35,45,0.18);">
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:14px;">
+          <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:16px;"><div style="font-size:11px; color:rgba(255,255,255,0.5); font-weight:600;">SAME-DAY START</div><div style="font-family:'Philosopher',serif; font-size:30px; font-weight:700; color:#69C9CC;">71%</div><div style="font-size:11px; color:#69C9CC;">▲ 9 pts</div></div>
+          <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:16px;"><div style="font-size:11px; color:rgba(255,255,255,0.5); font-weight:600;">CHAIR UTILIZATION</div><div style="font-family:'Philosopher',serif; font-size:30px; font-weight:700; color:#fff;">88%</div><div style="font-size:11px; color:#69C9CC;">▲ 3 pts</div></div>
+          <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:16px;"><div style="font-size:11px; color:rgba(255,255,255,0.5); font-weight:600;">PENDING AGING</div><div style="font-family:'Philosopher',serif; font-size:30px; font-weight:700; color:#fff;">$11.4k</div><div style="font-size:11px; color:#ED83D1;">2 over 14d</div></div>
+          <div style="background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.08); border-radius:12px; padding:16px;"><div style="font-size:11px; color:rgba(255,255,255,0.5); font-weight:600;">NO-SHOW (30d)</div><div style="font-family:'Philosopher',serif; font-size:30px; font-weight:700; color:#fff;">4.2%</div><div style="font-size:11px; color:#69C9CC;">▼ 1.1 pts</div></div>
+        </div>
+      </div>
+    </div>
+
+    <div data-reveal style="opacity:0; transform:translateY(40px); transition:all .9s cubic-bezier(0.16,1,0.3,1); display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+      <div>
+        <div style="font-size:13px; font-weight:800; letter-spacing:.06em; color:#67A4A1; text-transform:uppercase; margin-bottom:14px;">Ask Artemis</div>
+        <h3 style="font-family:'Philosopher',serif; font-weight:700; font-size:34px; line-height:1.1; letter-spacing:-0.01em; margin:0 0 16px; color:#24232D;">Ask in plain English. Or just say it.</h3>
+        <p style="font-size:17px; line-height:1.6; color:#6B7280; margin:0;">“Who hasn’t signed in 7+ days?” “Show me this month’s starts by referral source.” Type it or speak it — Artemis answers from your live Cloud 9 data in seconds.</p>
+      </div>
+      <div style="background:linear-gradient(160deg,#F2F0F3,#fff); border:1px solid #EEE; border-radius:18px; padding:24px; box-shadow:0 20px 50px rgba(36,35,45,0.07);">
+        <div style="display:flex; justify-content:flex-end; margin-bottom:12px;"><div style="background:#67A4A1; color:#fff; font-size:14px; font-weight:600; padding:11px 16px; border-radius:16px 16px 4px 16px; max-width:75%;">Who hasn’t signed in 7+ days?</div></div>
+        <div style="display:flex; gap:10px; align-items:flex-start;"><div style="width:30px;height:30px;border-radius:8px;background:#24232D;display:flex;align-items:center;justify-content:center;color:#69C9CC;font-weight:800;flex-shrink:0;">✦</div>
+          <div style="background:#fff; border:1px solid #EEE; border-radius:4px 16px 16px 16px; padding:13px 15px; font-size:14px; color:#24232D; line-height:1.5;">7 patients have unsigned contracts past 7 days, totaling <b>$38,200</b>. Want me to draft a nudge for each?
+            <div style="margin-top:10px; display:flex; gap:8px;"><span style="font-size:12px; font-weight:800; color:#fff; background:#ED83D1; padding:6px 12px; border-radius:980px;">Draft all 7</span><span style="font-size:12px; font-weight:700; color:#494E63; background:#F2F0F3; padding:6px 12px; border-radius:980px;">Show list</span></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div data-reveal style="opacity:0; transform:translateY(40px); transition:all .9s cubic-bezier(0.16,1,0.3,1); display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+      <div style="order:2;">
+        <div style="font-size:13px; font-weight:800; letter-spacing:.06em; color:#ED83D1; text-transform:uppercase; margin-bottom:14px;">Human in the loop</div>
+        <h3 style="font-family:'Philosopher',serif; font-weight:700; font-size:34px; line-height:1.1; letter-spacing:-0.01em; margin:0 0 16px; color:#24232D;">Automations that never act without sign-off.</h3>
+        <p style="font-size:17px; line-height:1.6; color:#6B7280; margin:0;">Artemis proposes the action — the recovery text, the eligibility check, the reconciliation — and waits. Nothing reaches a patient until a human taps approve. Hours saved, control kept.</p>
+      </div>
+      <div style="order:1; background:linear-gradient(160deg,#F2F0F3,#fff); border:1px solid #EEE; border-radius:18px; padding:24px; box-shadow:0 20px 50px rgba(36,35,45,0.07);">
+        <div style="background:#fff; border:1px solid #EEE; border-radius:14px; padding:18px;">
+          <div style="font-size:12px; color:#9CA3AF; font-weight:600; margin-bottom:6px;">PROPOSED · No-show recovery</div>
+          <div style="font-size:14px; color:#24232D; line-height:1.5; background:#F9FAFB; border-radius:10px; padding:12px; margin-bottom:14px;">“Hi Maya — we missed you today! Dr. Lane held your spot. Can we get you rebooked this week? Reply YES and we’ll find a time.”</div>
+          <div style="display:flex; gap:10px;"><span style="flex:1; text-align:center; font-size:13px; font-weight:800; color:#fff; background:#67A4A1; padding:10px; border-radius:10px;">Approve &amp; send</span><span style="text-align:center; font-size:13px; font-weight:700; color:#494E63; background:#F2F0F3; padding:10px 16px; border-radius:10px;">Edit</span></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===== PRODUCT GALLERY ===== -->
+<section id="product" style="background:#16161C; color:#fff; padding:120px 24px; margin-top:120px;">
+  <div data-reveal style="opacity:0; transform:translateY(24px); transition:all .8s cubic-bezier(0.16,1,0.3,1); max-width:780px; margin:0 auto 64px; text-align:center;">
+    <div style="font-size:13px; font-weight:800; letter-spacing:.08em; color:#69C9CC; text-transform:uppercase; margin-bottom:16px;">See it in motion</div>
+    <h2 style="font-family:'Philosopher',serif; font-weight:700; font-size:clamp(32px,5vw,52px); line-height:1.06; letter-spacing:-0.02em; margin:0; color:#fff;">One calm surface for the whole team.</h2>
+  </div>
+  <div data-reveal style="opacity:0; transform:translateY(30px); transition:all .9s cubic-bezier(0.16,1,0.3,1); max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+    <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; overflow:hidden;">
+      <div style="height:200px; padding:20px; background:linear-gradient(160deg,#1F2230,#16161C);">
+        <div style="font-size:11px; color:rgba(255,255,255,0.5);">TREATMENT FUNNEL</div>
+        <div style="display:flex; align-items:flex-end; gap:8px; height:130px; margin-top:14px;">
+          <div style="flex:1; background:#69C9CC; height:100%; border-radius:6px 6px 0 0; transform-origin:bottom; animation:ao-bar 1s ease-out;"></div>
+          <div style="flex:1; background:#67A4A1; height:74%; border-radius:6px 6px 0 0; transform-origin:bottom; animation:ao-bar 1s ease-out .1s;"></div>
+          <div style="flex:1; background:#5A908E; height:52%; border-radius:6px 6px 0 0; transform-origin:bottom; animation:ao-bar 1s ease-out .2s;"></div>
+          <div style="flex:1; background:#696C8B; height:38%; border-radius:6px 6px 0 0; transform-origin:bottom; animation:ao-bar 1s ease-out .3s;"></div>
+        </div>
+      </div>
+      <div style="padding:18px;"><div style="font-weight:700; font-size:16px;">Live treatment funnel</div><div style="font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;">Exam → consult → contract → start, with aging anomalies flagged.</div></div>
+    </div>
+    <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; overflow:hidden;">
+      <div style="height:200px; padding:20px; background:linear-gradient(160deg,#1F2230,#16161C); display:flex; flex-direction:column; gap:9px; justify-content:center;">
+        <div style="height:14px; border-radius:7px; background:linear-gradient(90deg,rgba(105,201,204,0.15),rgba(105,201,204,0.4),rgba(105,201,204,0.15)); background-size:200% 100%; animation:ao-shimmer 2.4s linear infinite; width:90%;"></div>
+        <div style="height:14px; border-radius:7px; background:linear-gradient(90deg,rgba(105,201,204,0.15),rgba(105,201,204,0.4),rgba(105,201,204,0.15)); background-size:200% 100%; animation:ao-shimmer 2.4s linear infinite .2s; width:70%;"></div>
+        <div style="height:14px; border-radius:7px; background:linear-gradient(90deg,rgba(105,201,204,0.15),rgba(105,201,204,0.4),rgba(105,201,204,0.15)); background-size:200% 100%; animation:ao-shimmer 2.4s linear infinite .4s; width:80%;"></div>
+        <div style="margin-top:8px; align-self:flex-start; font-size:12px; font-weight:700; color:#16161C; background:#69C9CC; padding:7px 14px; border-radius:980px;">✦ Ask Artemis</div>
+      </div>
+      <div style="padding:18px;"><div style="font-weight:700; font-size:16px;">Ask in plain English</div><div style="font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;">Type or speak. Answers from live Cloud 9 data in seconds.</div></div>
+    </div>
+    <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; overflow:hidden;">
+      <div style="height:200px; padding:20px; background:linear-gradient(160deg,#1F2230,#16161C); display:flex; flex-direction:column; gap:10px; justify-content:center;">
+        <div style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.06); border-radius:10px; padding:11px;"><span style="width:8px;height:8px;border-radius:50%;background:#69C9CC; animation:ao-pulse 1.6s ease-in-out infinite;"></span><span style="font-size:12px; color:rgba(255,255,255,0.8);">Insurance verified overnight</span></div>
+        <div style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.06); border-radius:10px; padding:11px;"><span style="width:8px;height:8px;border-radius:50%;background:#69C9CC; animation:ao-pulse 1.6s ease-in-out infinite .5s;"></span><span style="font-size:12px; color:rgba(255,255,255,0.8);">Day reconciled · 0 discrepancies</span></div>
+        <div style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.06); border-radius:10px; padding:11px;"><span style="width:8px;height:8px;border-radius:50%;background:#ED83D1; animation:ao-pulse 1.6s ease-in-out infinite 1s;"></span><span style="font-size:12px; color:rgba(255,255,255,0.8);">3 actions awaiting sign-off</span></div>
+      </div>
+      <div style="padding:18px;"><div style="font-weight:700; font-size:16px;">Automations, supervised</div><div style="font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;">Runs the busywork overnight. Holds anything that touches a patient.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== RESULTS ===== -->
+<section id="results" style="background:#fff; padding:120px 24px;">
+  <div data-reveal style="opacity:0; transform:translateY(24px); transition:all .8s cubic-bezier(0.16,1,0.3,1); max-width:1080px; margin:0 auto; text-align:center;">
+    <div style="font-size:13px; font-weight:800; letter-spacing:.08em; color:#67A4A1; text-transform:uppercase; margin-bottom:16px;">The payoff</div>
+    <h2 style="font-family:'Philosopher',serif; font-weight:700; font-size:clamp(32px,5vw,52px); line-height:1.06; letter-spacing:-0.02em; margin:0 0 64px; color:#24232D;">Hours back. Nothing slipping through.</h2>
+    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:32px;">
+      <div><div style="font-family:'Philosopher',serif; font-weight:700; font-size:64px; line-height:1; color:#67A4A1;">6+</div><div style="font-size:16px; color:#6B7280; margin-top:10px;">hours handed back to each team, every week</div></div>
+      <div><div style="font-family:'Philosopher',serif; font-weight:700; font-size:64px; line-height:1; color:#67A4A1;">$38k</div><div style="font-size:16px; color:#6B7280; margin-top:10px;">in stalled contracts surfaced before they age out</div></div>
+      <div><div style="font-family:'Philosopher',serif; font-weight:700; font-size:64px; line-height:1; color:#67A4A1;">0</div><div style="font-size:16px; color:#6B7280; margin-top:10px;">nightly spreadsheets, manual calls, or double entry</div></div>
+    </div>
+    <div style="margin-top:72px; max-width:760px; margin-left:auto; margin-right:auto; background:#F2F0F3; border-radius:20px; padding:44px;">
+      <div style="font-family:'Philosopher',serif; font-size:24px; line-height:1.4; color:#24232D; font-weight:400;">“It’s the first thing every role opens. We stopped reconciling at night and stopped chasing contracts blind — Artemis just tells us what needs us.”</div>
+      <div style="margin-top:20px; font-size:14px; font-weight:700; color:#494E63;">Practice Administrator · 3-location ortho group</div>
+    </div>
+  </div>
+</section>
+
+<!-- ===== DEMO / SIGNUP ===== -->
+<section id="demo" style="position:relative; background:#16161C; color:#fff; padding:110px 24px; overflow:hidden;">
+  <div style="position:absolute; inset:0; z-index:0;">
+    <div style="position:absolute; top:-30%; left:30%; width:60%; height:120%; background:radial-gradient(closest-side, rgba(103,164,161,0.4), transparent 70%); filter:blur(60px); animation:ao-mesh 20s ease-in-out infinite;"></div>
+  </div>
+  <div data-reveal style="opacity:0; transform:translateY(28px); transition:all .9s cubic-bezier(0.16,1,0.3,1); position:relative; z-index:1; max-width:560px; margin:0 auto; text-align:center;">
+    <h2 style="font-family:'Philosopher',serif; font-weight:700; font-size:clamp(32px,5vw,52px); line-height:1.06; letter-spacing:-0.02em; margin:0 0 16px;">Start with tomorrow’s briefing.</h2>
+    <p style="font-size:18px; line-height:1.5; color:rgba(255,255,255,0.7); margin:0 0 36px;">Sign up free and we’ll connect Artemis to your Cloud 9 data. Your first morning briefing lands the next day — no credit card, no IT project.</p>
+    <form action="/api/trial" method="post" style="display:flex; flex-direction:column; gap:12px; text-align:left;">
+      <!-- Honeypot: hidden from users, catches bots. Must stay empty. -->
+      <div style="position:absolute; left:-9999px;" aria-hidden="true">
+        <label>Company website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+        <input required name="first_name" autocomplete="given-name" placeholder="First name" style="padding:14px 16px; border-radius:12px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.06); color:#fff; font-size:15px; font-family:'Karla',sans-serif; outline:none;">
+        <input required name="practice" placeholder="Practice name" style="padding:14px 16px; border-radius:12px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.06); color:#fff; font-size:15px; font-family:'Karla',sans-serif; outline:none;">
+      </div>
+      <input required name="email" type="email" autocomplete="email" placeholder="Work email" style="padding:14px 16px; border-radius:12px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.06); color:#fff; font-size:15px; font-family:'Karla',sans-serif; outline:none;">
+      <button type="submit" style="margin-top:4px; padding:15px; border-radius:12px; border:none; background:#67A4A1; color:#fff; font-size:16px; font-weight:800; font-family:'Karla',sans-serif; cursor:pointer; box-shadow:0 8px 30px rgba(103,164,161,0.4);">Sign up free</button>
+    </form>
+    <div style="margin-top:16px; font-size:13px; color:rgba(255,255,255,0.45);">Official Cloud 9 Ortho partner · SOC 2 in progress · You stay in control of every patient message.</div>
+  </div>
+</section>
+
+<!-- ===== FOOTER ===== -->
+<footer style="background:#0E0E12; color:rgba(255,255,255,0.6); padding:48px 24px;">
+  <div style="max-width:1080px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; flex-wrap:wrap; gap:24px;">
+    <div style="display:flex; align-items:center; gap:10px;">
+      <img src="/artemis-icon.png" style="height:24px; filter:brightness(0) invert(1);">
+      <span style="font-family:'Philosopher',serif; font-weight:700; font-size:16px; color:#fff;">Artemis Ortho App</span>
+    </div>
+    <div style="display:flex; gap:28px; font-size:13px; font-weight:600;">
+      <a href="#features" style="color:rgba(255,255,255,0.6); text-decoration:none;">Features</a>
+      <a href="#product" style="color:rgba(255,255,255,0.6); text-decoration:none;">Product</a>
+      <a href="#results" style="color:rgba(255,255,255,0.6); text-decoration:none;">Results</a>
+      <a href="#demo" style="color:rgba(255,255,255,0.6); text-decoration:none;">Sign up</a>
+    </div>
+    <div style="font-size:12px; color:rgba(255,255,255,0.35);">© 2026 Artemis Ortho App · artemisorthoapp.com</div>
+  </div>
+</footer>
+
+</div>
+
+<script>
+  // Scroll-reveal — fade/slide each [data-reveal] in as it enters the viewport.
+  (function () {
+    const els = document.querySelectorAll('[data-reveal]');
+    if (!('IntersectionObserver' in window)) {
+      els.forEach((el) => { el.style.opacity = '1'; el.style.transform = 'none'; });
+      return;
+    }
+    const io = new IntersectionObserver((entries) => {
+      entries.forEach((e) => {
+        if (e.isIntersecting) {
+          e.target.style.opacity = '1';
+          e.target.style.transform = 'none';
+          io.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+    els.forEach((el) => io.observe(el));
+  })();
+</script>
+
+  </body>
+</html>
