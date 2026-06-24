@@ -46,6 +46,26 @@ const canonical = new URL("/", Astro.site).href;
       @keyframes ao-blink { 0%,49%{ opacity:1;} 50%,100%{ opacity:0;} }
       @keyframes ao-rise { 0%{ transform:translateY(8px); opacity:0;} 100%{ transform:translateY(0); opacity:1;} }
       @keyframes ao-bar { 0%{ transform:scaleY(.2);} 100%{ transform:scaleY(1);} }
+
+      /* ---- Responsive: collapse the fixed grids for tablet / phone ---- */
+      img { max-width: 100%; }
+      /* Tablet & below (incl. iPad portrait 768) */
+      @media (max-width: 900px) {
+        .feat-row { grid-template-columns: 1fr !important; gap: 36px !important; }
+        .feat-row > * { order: 0 !important; }   /* text leads, visual follows */
+        .gallery-grid { grid-template-columns: repeat(2, 1fr) !important; }
+      }
+      /* Phone */
+      @media (max-width: 600px) {
+        .nav-links a:not(.nav-cta) { display: none !important; }
+        .gallery-grid { grid-template-columns: 1fr !important; }
+        .results-stats { grid-template-columns: 1fr !important; gap: 28px !important; }
+        .form-names { grid-template-columns: 1fr !important; }
+        .mock-grid { grid-template-columns: 1fr !important; }
+        .mock-sidebar { display: none !important; }
+        .footer-links { flex-wrap: wrap !important; gap: 14px 18px !important; }
+        .sec-pad { padding-top: 76px !important; padding-bottom: 76px !important; }
+      }
     </style>
     <noscript><style>[data-reveal]{opacity:1 !important; transform:none !important;}</style></noscript>
   </head>
@@ -59,12 +79,12 @@ const canonical = new URL("/", Astro.site).href;
     <a href="#top" style="display:flex; align-items:center; text-decoration:none;">
       <img src="/artemis-logo.png" alt="Artemis Ortho App" width="900" height="274" style="height:30px; width:auto; display:block;">
     </a>
-    <div style="display:flex; align-items:center; gap:28px;">
+    <div class="nav-links" style="display:flex; align-items:center; gap:28px;">
       <a href="/features" style="font-size:13px; font-weight:600; color:#494E63; text-decoration:none;">Features</a>
       <a href="#product" style="font-size:13px; font-weight:600; color:#494E63; text-decoration:none;">Product</a>
       <a href="#results" style="font-size:13px; font-weight:600; color:#494E63; text-decoration:none;">Results</a>
       <a href="/about" style="font-size:13px; font-weight:600; color:#494E63; text-decoration:none;">About</a>
-      <a href="#demo" style="display:inline-flex; align-items:center; padding:7px 16px; border-radius:980px; background:#67A4A1; color:#fff; font-size:13px; font-weight:800; text-decoration:none;">Sign up free</a>
+      <a href="#demo" class="nav-cta" style="display:inline-flex; align-items:center; padding:7px 16px; border-radius:980px; background:#67A4A1; color:#fff; font-size:13px; font-weight:800; text-decoration:none;">Sign up free</a>
     </div>
   </div>
 </nav>
@@ -106,9 +126,9 @@ const canonical = new URL("/", Astro.site).href;
             <span style="width:11px; height:11px; border-radius:50%; background:#28C840;"></span>
             <div style="flex:1; text-align:center; font-size:12px; color:#9CA3AF; font-weight:600;">app.artemisorthoapp.com</div>
           </div>
-          <div style="display:grid; grid-template-columns:200px 1fr; min-height:430px;">
+          <div class="mock-grid" style="display:grid; grid-template-columns:200px 1fr; min-height:430px;">
             <!-- sidebar -->
-            <div style="background:#1F2230; padding:18px 14px; color:#fff;">
+            <div class="mock-sidebar" style="background:#1F2230; padding:18px 14px; color:#fff;">
               <div style="display:flex; align-items:center; gap:8px; margin-bottom:24px;">
                 <img src="/artemis-icon.png" style="height:22px; filter:brightness(0) invert(1);">
                 <span style="font-family:'Philosopher',serif; font-weight:700; font-size:14px;">Artemis</span>
@@ -176,7 +196,7 @@ const canonical = new URL("/", Astro.site).href;
   <!-- feature rows -->
   <div style="max-width:1080px; margin:0 auto; display:flex; flex-direction:column; gap:110px;">
 
-    <div data-reveal style="opacity:0; transform:translateY(40px); transition:all .9s cubic-bezier(0.16,1,0.3,1); display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+    <div data-reveal class="feat-row" style="opacity:0; transform:translateY(40px); transition:all .9s cubic-bezier(0.16,1,0.3,1); display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
       <div>
         <div style="font-size:13px; font-weight:800; letter-spacing:.06em; color:#ED83D1; text-transform:uppercase; margin-bottom:14px;">Per role, per morning</div>
         <h3 style="font-family:'Philosopher',serif; font-weight:700; font-size:34px; line-height:1.1; letter-spacing:-0.01em; margin:0 0 16px; color:#24232D;">The three things that need you today.</h3>
@@ -191,7 +211,7 @@ const canonical = new URL("/", Astro.site).href;
       </div>
     </div>
 
-    <div data-reveal style="opacity:0; transform:translateY(40px); transition:all .9s cubic-bezier(0.16,1,0.3,1); display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+    <div data-reveal class="feat-row" style="opacity:0; transform:translateY(40px); transition:all .9s cubic-bezier(0.16,1,0.3,1); display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
       <div style="order:2;">
         <div style="font-size:13px; font-weight:800; letter-spacing:.06em; color:#67A4A1; text-transform:uppercase; margin-bottom:14px;">Ortho-real KPIs</div>
         <h3 style="font-family:'Philosopher',serif; font-weight:700; font-size:34px; line-height:1.1; letter-spacing:-0.01em; margin:0 0 16px; color:#24232D;">Metrics that mean something in an ortho practice.</h3>
@@ -207,7 +227,7 @@ const canonical = new URL("/", Astro.site).href;
       </div>
     </div>
 
-    <div data-reveal style="opacity:0; transform:translateY(40px); transition:all .9s cubic-bezier(0.16,1,0.3,1); display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+    <div data-reveal class="feat-row" style="opacity:0; transform:translateY(40px); transition:all .9s cubic-bezier(0.16,1,0.3,1); display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
       <div>
         <div style="font-size:13px; font-weight:800; letter-spacing:.06em; color:#67A4A1; text-transform:uppercase; margin-bottom:14px;">Ask Artemis</div>
         <h3 style="font-family:'Philosopher',serif; font-weight:700; font-size:34px; line-height:1.1; letter-spacing:-0.01em; margin:0 0 16px; color:#24232D;">Ask in plain English. Or just say it.</h3>
@@ -223,7 +243,7 @@ const canonical = new URL("/", Astro.site).href;
       </div>
     </div>
 
-    <div data-reveal style="opacity:0; transform:translateY(40px); transition:all .9s cubic-bezier(0.16,1,0.3,1); display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
+    <div data-reveal class="feat-row" style="opacity:0; transform:translateY(40px); transition:all .9s cubic-bezier(0.16,1,0.3,1); display:grid; grid-template-columns:1fr 1fr; gap:60px; align-items:center;">
       <div style="order:2;">
         <div style="font-size:13px; font-weight:800; letter-spacing:.06em; color:#ED83D1; text-transform:uppercase; margin-bottom:14px;">Human in the loop</div>
         <h3 style="font-family:'Philosopher',serif; font-weight:700; font-size:34px; line-height:1.1; letter-spacing:-0.01em; margin:0 0 16px; color:#24232D;">Automations that never act without sign-off.</h3>
@@ -247,7 +267,7 @@ const canonical = new URL("/", Astro.site).href;
     <div style="font-size:13px; font-weight:800; letter-spacing:.08em; color:#69C9CC; text-transform:uppercase; margin-bottom:16px;">See it in motion</div>
     <h2 style="font-family:'Philosopher',serif; font-weight:700; font-size:clamp(32px,5vw,52px); line-height:1.06; letter-spacing:-0.02em; margin:0; color:#fff;">One calm surface for the whole team.</h2>
   </div>
-  <div data-reveal style="opacity:0; transform:translateY(30px); transition:all .9s cubic-bezier(0.16,1,0.3,1); max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
+  <div data-reveal class="gallery-grid" style="opacity:0; transform:translateY(30px); transition:all .9s cubic-bezier(0.16,1,0.3,1); max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
     <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; overflow:hidden;">
       <div style="height:200px; padding:20px; background:linear-gradient(160deg,#1F2230,#16161C);">
         <div style="font-size:11px; color:rgba(255,255,255,0.5);">TREATMENT FUNNEL</div>
@@ -285,7 +305,7 @@ const canonical = new URL("/", Astro.site).href;
   <div data-reveal style="opacity:0; transform:translateY(24px); transition:all .8s cubic-bezier(0.16,1,0.3,1); max-width:1080px; margin:0 auto; text-align:center;">
     <div style="font-size:13px; font-weight:800; letter-spacing:.08em; color:#67A4A1; text-transform:uppercase; margin-bottom:16px;">The payoff</div>
     <h2 style="font-family:'Philosopher',serif; font-weight:700; font-size:clamp(32px,5vw,52px); line-height:1.06; letter-spacing:-0.02em; margin:0 0 64px; color:#24232D;">Hours back. Nothing slipping through.</h2>
-    <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:32px;">
+    <div class="results-stats" style="display:grid; grid-template-columns:repeat(3,1fr); gap:32px;">
       <div><div style="font-family:'Philosopher',serif; font-weight:700; font-size:64px; line-height:1; color:#67A4A1;">6+</div><div style="font-size:16px; color:#6B7280; margin-top:10px;">hours handed back to each team, every week</div></div>
       <div><div style="font-family:'Philosopher',serif; font-weight:700; font-size:64px; line-height:1; color:#67A4A1;">$38k</div><div style="font-size:16px; color:#6B7280; margin-top:10px;">in stalled contracts surfaced before they age out</div></div>
       <div><div style="font-family:'Philosopher',serif; font-weight:700; font-size:64px; line-height:1; color:#67A4A1;">0</div><div style="font-size:16px; color:#6B7280; margin-top:10px;">nightly spreadsheets, manual calls, or double entry</div></div>
@@ -310,7 +330,7 @@ const canonical = new URL("/", Astro.site).href;
       <div style="position:absolute; left:-9999px;" aria-hidden="true">
         <label>Company website<input type="text" name="company_website" tabindex="-1" autocomplete="off"></label>
       </div>
-      <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
+      <div class="form-names" style="display:grid; grid-template-columns:1fr 1fr; gap:12px;">
         <input required name="first_name" autocomplete="given-name" placeholder="First name" style="padding:14px 16px; border-radius:12px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.06); color:#fff; font-size:15px; font-family:'Karla',sans-serif; outline:none;">
         <input required name="practice" placeholder="Practice name" style="padding:14px 16px; border-radius:12px; border:1px solid rgba(255,255,255,0.15); background:rgba(255,255,255,0.06); color:#fff; font-size:15px; font-family:'Karla',sans-serif; outline:none;">
       </div>
@@ -327,7 +347,7 @@ const canonical = new URL("/", Astro.site).href;
     <div style="display:flex; align-items:center;">
       <img src="/artemis-logo-white.png" alt="Artemis Ortho App" width="900" height="274" style="height:28px; width:auto; display:block;">
     </div>
-    <div style="display:flex; gap:28px; font-size:13px; font-weight:600;">
+    <div class="footer-links" style="display:flex; gap:28px; font-size:13px; font-weight:600;">
       <a href="/features" style="color:rgba(255,255,255,0.6); text-decoration:none;">Features</a>
       <a href="#product" style="color:rgba(255,255,255,0.6); text-decoration:none;">Product</a>
       <a href="#results" style="color:rgba(255,255,255,0.6); text-decoration:none;">Results</a>
