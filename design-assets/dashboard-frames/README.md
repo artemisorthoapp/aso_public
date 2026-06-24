@@ -26,3 +26,12 @@ here).
 
 Branding shows "Artemis Smiles" (the default practice logo) and the signed-in
 user's first name ("Dr. Bennie") — swap both for whatever the hero should show.
+
+## Scroll-through assets (added for the scrubbed hero)
+- `walkthrough.webm` — a headless screen recording scrolling through all five
+  verbs (Today → People → Growth → Money → Operations), 1440×900. WebM (VP8);
+  re-encode to mp4 if you need broader playback.
+- `today-scrub/frame-000.jpg … frame-026.jpg` — 27 evenly-spaced frames of the
+  **Today** page scrolling top→bottom. This is the sequence to drive an
+  Apple-style scroll-scrub hero (map scroll position → frame index). Same
+  empty-sandbox data caveat as above — swap in realistic numbers.
