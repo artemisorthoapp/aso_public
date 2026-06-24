@@ -1,37 +1,41 @@
 # Artemis Ortho App — real dashboard UI frames
 
 Pixel-accurate captures of the **actual** Artemis dashboard interface, for the
-design agent to replace the marketing-site mockups with the real UI.
+design agent to replace the marketing-site mockups with the real UI. Captured
+2026-06-24 at 1440×900 (full-page), from the live React app, signed in to a
+**synthetic, PHI-free sandbox tenant** seeded with realistic demo data.
 
-Captured 2026-06-24 at 1440×900 (full-page), from the live React app.
+## ⚠️ Data & safety
+- This is the real **UI / layout / components / type / color**. The tenant is a
+  non-production test practice seeded with **invented** patients and numbers
+  (no real patient information appears anywhere — there is no PHI here).
+- Names like "Aiden Barnes" / "Dr. Bennie" and all figures are **placeholders** —
+  swap them for whatever the hero should show. Branding shows "Artemis Smiles".
 
-## Frames
-- `01-today.jpeg` — **Today** (the briefing): 5-verb sidebar, top bar, briefing
-  cards, "Practice vitals" KPI tiles, schedule.
-- `02-people.jpeg` — **People** (treatment funnel): stage rows with progress
-  bars, tabbed sub-nav, AI "how are we doing" summary, KPI chips.
-- `03-growth.jpeg` — **Growth** (channel scoreboard / leads / SEO / social).
-- `04-money.jpeg` — **Money** (cash flow): fiscal-year selector, AI summary,
-  case-value / insurance-mix / adjustments cards, AR row.
-- `05-operations.jpeg` — **Operations** (team + schedule).
+## `gallery/` — 30 feature screens
+Full-page captures across the whole product. Highlights (see `_manifest.txt` for
+the full path map):
+- Verbs: `01-today`, `02-people-funnel`, `08-growth`, `16-money`, `19-operations`
+- **Social / Instagram reels**: `09-growth-social-reels` (Social Planner +
+  Content Generation, platform connects, content calendar)
+- **Insurance check**: `06-people-insurance-check` (Form Submissions /
+  Eligibility Check / Claims)
+- **Inventory**: `20-operations-inventory`
+- **Photos upload**: `26-photos-upload` (records upload)
+- **Snap / Canva poster**: `28-snap-canva` (patient picker → Canva design step)
+- **Direct mail**, **Blog campaign** (`12`), **SEO** (`11`), **Scheduling**
+  (`03`), **Communication** (`04`), **Cases** (`05`), **Patients** (`07`),
+  **Financials** (`17`), **QuickBooks/Expenses** (`18`), **Training** (`21`),
+  **Payroll** (`22`), **Employee reviews** (`23`), **Automations / Job schedules**
+  (`25`), **Settings** (`29`), and more.
 
-## ⚠️ About the data (read this)
-These are the real **UI / layout / components / type / color**, but the
-underlying tenant is an **empty synthetic sandbox** (a non-production test
-practice with zero records), so every metric reads `0` / `$0` and the AI
-summaries say "no data yet." **The numbers/labels are placeholders — populate
-them with your own realistic demo data.** No real patient information appears in
-any frame (the capture was scoped to the empty test tenant; there is no PHI
-here).
+Some feature pages render as their real **empty / connect-an-account** state
+(e.g. insurance has no submissions, social platforms show "connect") — that's the
+genuine first-run UI; populate as needed.
 
-Branding shows "Artemis Smiles" (the default practice logo) and the signed-in
-user's first name ("Dr. Bennie") — swap both for whatever the hero should show.
-
-## Scroll-through assets (added for the scrubbed hero)
-- `walkthrough.webm` — a headless screen recording scrolling through all five
-  verbs (Today → People → Growth → Money → Operations), 1440×900. WebM (VP8);
-  re-encode to mp4 if you need broader playback.
+## Scroll-through assets (for the Apple-style scrubbed hero)
+- `walkthrough.webm` — headless screen recording scrolling through all five verbs
+  (1440×900, VP8; re-encode to mp4 for broader playback).
 - `today-scrub/frame-000.jpg … frame-026.jpg` — 27 evenly-spaced frames of the
-  **Today** page scrolling top→bottom. This is the sequence to drive an
-  Apple-style scroll-scrub hero (map scroll position → frame index). Same
-  empty-sandbox data caveat as above — swap in realistic numbers.
+  **Today** page scrolling top→bottom, populated. Drive a scroll-scrub by mapping
+  scroll position → frame index.
