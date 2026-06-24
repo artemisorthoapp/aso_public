@@ -47,6 +47,22 @@ const canonical = new URL("/", Astro.site).href;
       @keyframes ao-rise { 0%{ transform:translateY(8px); opacity:0;} 100%{ transform:translateY(0); opacity:1;} }
       @keyframes ao-bar { 0%{ transform:scaleY(.2);} 100%{ transform:scaleY(1);} }
 
+      /* ---- Scroll-scrub hero (real Today UI, frame sequence) ---- */
+      .scrub-track { height: 230vh; margin-top: 48px; }
+      .scrub-stage { position: sticky; top: 0; height: 100vh; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 18px; }
+      .scrub-frame { width: min(980px, 92vw); background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.12); border-radius: 16px; padding: 8px; box-shadow: 0 40px 90px rgba(0,0,0,0.5); }
+      .scrub-viewport { border-radius: 10px; overflow: hidden; background: #FBFBFC; aspect-ratio: 1440 / 900; }
+      .scrub-viewport img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+      .scrub-hint { font-size: 13px; font-weight: 700; letter-spacing: .04em; color: rgba(255,255,255,0.5); text-transform: uppercase; }
+      @media (max-width: 900px) { .scrub-track { height: 180vh; } }
+      @media (prefers-reduced-motion: reduce) { .scrub-track { height: auto; } .scrub-stage { position: static; height: auto; padding: 8px 0 0; } }
+
+      /* ---- Product gallery: real screenshot cards ---- */
+      .shot-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 16px; overflow: hidden; transition: transform .4s cubic-bezier(0.16,1,0.3,1), border-color .4s; }
+      .shot-card:hover { transform: translateY(-4px); border-color: rgba(105,201,204,0.4); }
+      .shot-view { aspect-ratio: 16 / 10; overflow: hidden; background: #1F2230; border-bottom: 1px solid rgba(255,255,255,0.08); }
+      .shot-view img { display: block; width: 100%; height: 100%; object-fit: cover; object-position: top center; }
+
       /* ---- Responsive: collapse the fixed grids for tablet / phone ---- */
       img { max-width: 100%; }
       /* Tablet & below (incl. iPad portrait 768) */
@@ -71,7 +87,9 @@ const canonical = new URL("/", Astro.site).href;
   </head>
   <body>
 
-<div style="overflow-x:hidden;">
+<!-- overflow-x:clip (not hidden) so it doesn't create a scroll container that
+     would break the scroll-scrub hero's position:sticky. -->
+<div style="overflow-x:clip;">
 
 <!-- ===== NAV ===== -->
 <nav style="position:fixed; top:0; left:0; right:0; z-index:100; backdrop-filter:saturate(180%) blur(20px); -webkit-backdrop-filter:saturate(180%) blur(20px); background:rgba(255,255,255,0.72); border-bottom:1px solid rgba(36,35,45,0.07);">
@@ -113,67 +131,70 @@ const canonical = new URL("/", Astro.site).href;
       <a href="#features" style="display:inline-flex; align-items:center; gap:6px; padding:13px 24px; border-radius:980px; background:rgba(255,255,255,0.08); border:1px solid rgba(255,255,255,0.18); color:#fff; font-size:16px; font-weight:700; text-decoration:none;">See how it works →</a>
     </div>
   </div>
+</section>
 
-  <!-- App demo mockup -->
-  <div data-reveal style="opacity:0; transform:translateY(40px); transition:all 1s cubic-bezier(0.16,1,0.3,1) .3s; position:relative; z-index:1; max-width:980px; margin:64px auto 0;">
-    <div style="animation:ao-float 7s ease-in-out infinite;">
-      <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.12); border-radius:18px; padding:10px; box-shadow:0 40px 90px rgba(0,0,0,0.5);">
-        <div style="background:#FBFBFC; border-radius:11px; overflow:hidden;">
-          <!-- app top bar -->
-          <div style="display:flex; align-items:center; gap:8px; padding:13px 18px; border-bottom:1px solid #EEE; background:#fff;">
-            <span style="width:11px; height:11px; border-radius:50%; background:#FF5F57;"></span>
-            <span style="width:11px; height:11px; border-radius:50%; background:#FEBC2E;"></span>
-            <span style="width:11px; height:11px; border-radius:50%; background:#28C840;"></span>
-            <div style="flex:1; text-align:center; font-size:12px; color:#9CA3AF; font-weight:600;">app.artemisorthoapp.com</div>
-          </div>
-          <div class="mock-grid" style="display:grid; grid-template-columns:200px 1fr; min-height:430px;">
-            <!-- sidebar -->
-            <div class="mock-sidebar" style="background:#1F2230; padding:18px 14px; color:#fff;">
-              <div style="display:flex; align-items:center; gap:8px; margin-bottom:24px;">
-                <img src="/artemis-icon.png" style="height:22px; filter:brightness(0) invert(1);">
-                <span style="font-family:'Philosopher',serif; font-weight:700; font-size:14px;">Artemis</span>
-              </div>
-              <div style="display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:8px; background:#67A4A1; font-size:13px; font-weight:700; margin-bottom:4px;"><span>◆</span> Briefing</div>
-              <div style="display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:8px; color:rgba(255,255,255,0.6); font-size:13px; margin-bottom:4px;"><span>▤</span> Treatment funnel</div>
-              <div style="display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:8px; color:rgba(255,255,255,0.6); font-size:13px; margin-bottom:4px;"><span>◇</span> KPIs</div>
-              <div style="display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:8px; color:rgba(255,255,255,0.6); font-size:13px; margin-bottom:4px;"><span>⟲</span> Automations</div>
-              <div style="margin-top:auto; padding-top:120px;">
-                <div style="background:rgba(255,255,255,0.06); border-radius:10px; padding:11px; font-size:11px; color:rgba(255,255,255,0.55); line-height:1.4;">Synced with Cloud 9<br><span style="color:#69C9CC; font-weight:700;">● 4 min ago</span></div>
-              </div>
-            </div>
-            <!-- main -->
-            <div style="padding:22px 24px; background:#FBFBFC; text-align:left;">
-              <div style="font-size:12px; color:#9CA3AF; font-weight:600; letter-spacing:.04em;">TUESDAY, JUNE 23</div>
-              <div style="font-family:'Philosopher',serif; font-weight:700; font-size:24px; color:#24232D; margin:2px 0 4px;">Good morning, Dr. Lane</div>
-              <div style="font-size:13px; color:#6B7280; margin-bottom:18px;">3 things need you today.</div>
-
-              <div style="display:flex; flex-direction:column; gap:10px;">
-                <div style="display:flex; gap:12px; align-items:flex-start; background:#fff; border:1px solid #EEE; border-left:3px solid #ED83D1; border-radius:10px; padding:13px 15px; animation:ao-rise .6s ease-out both;">
-                  <div style="width:30px; height:30px; border-radius:8px; background:#FCEBF7; display:flex; align-items:center; justify-content:center; color:#ED83D1; font-weight:800; flex-shrink:0;">!</div>
-                  <div><div style="font-size:13px; font-weight:700; color:#24232D;">2 contracts aging past 14 days</div><div style="font-size:12px; color:#6B7280;">$11,400 in pending starts. Tap to review &amp; nudge.</div></div>
-                </div>
-                <div style="display:flex; gap:12px; align-items:flex-start; background:#fff; border:1px solid #EEE; border-left:3px solid #67A4A1; border-radius:10px; padding:13px 15px; animation:ao-rise .6s ease-out .12s both;">
-                  <div style="width:30px; height:30px; border-radius:8px; background:#E0F5F5; display:flex; align-items:center; justify-content:center; color:#67A4A1; font-weight:800; flex-shrink:0;">↑</div>
-                  <div><div style="font-size:13px; font-weight:700; color:#24232D;">Same-day start rate up to 71%</div><div style="font-size:12px; color:#6B7280;">+9 pts vs last week. 4 exams convert-ready.</div></div>
-                </div>
-                <div style="display:flex; gap:12px; align-items:flex-start; background:#fff; border:1px solid #EEE; border-left:3px solid #696C8B; border-radius:10px; padding:13px 15px; animation:ao-rise .6s ease-out .24s both;">
-                  <div style="width:30px; height:30px; border-radius:8px; background:#EEE; display:flex; align-items:center; justify-content:center; color:#696C8B; font-weight:800; flex-shrink:0;">⟲</div>
-                  <div><div style="font-size:13px; font-weight:700; color:#24232D;">3 no-show recovery texts ready</div><div style="font-size:12px; color:#6B7280;">Drafted &amp; waiting for your one-tap approval.</div></div>
-                </div>
-              </div>
-
-              <div style="margin-top:18px; display:flex; align-items:center; gap:10px; background:#fff; border:1px solid #E5E7EB; border-radius:980px; padding:11px 16px;">
-                <span style="color:#67A4A1; font-weight:800;">✦</span>
-                <span style="font-size:13px; color:#9CA3AF;">Ask Artemis — “who hasn’t signed in 7+ days?”</span>
-                <span style="width:2px; height:15px; background:#67A4A1; animation:ao-blink 1.1s step-end infinite; margin-left:-4px;"></span>
-              </div>
-            </div>
-          </div>
+<!-- App demo — real UI, scroll-scrubbed through the Today page. Its own section
+     so position:sticky isn't clipped by the hero's overflow:hidden. -->
+<section style="background:#16161C; color:#fff;">
+  <div class="scrub-track" style="position:relative; z-index:1;">
+    <div class="scrub-stage">
+      <div class="scrub-frame">
+        <!-- browser chrome -->
+        <div style="display:flex; align-items:center; gap:8px; padding:11px 16px; border-bottom:1px solid rgba(0,0,0,0.06); background:#fff;">
+          <span style="width:11px; height:11px; border-radius:50%; background:#FF5F57;"></span>
+          <span style="width:11px; height:11px; border-radius:50%; background:#FEBC2E;"></span>
+          <span style="width:11px; height:11px; border-radius:50%; background:#28C840;"></span>
+          <div style="flex:1; text-align:center; font-size:12px; color:#9CA3AF; font-weight:600;">app.artemisorthoapp.com</div>
+        </div>
+        <div class="scrub-viewport">
+          <img id="scrubImg" src="/scrub/frame-000.jpg" alt="The Artemis Today briefing — your whole practice on one screen" width="1440" height="900" loading="eager" decoding="async">
         </div>
       </div>
+      <div class="scrub-hint">Scroll to explore your morning briefing ↓</div>
     </div>
   </div>
 </section>
+
+<script is:inline>
+  // Apple-style scroll-scrub: map scroll progress through .scrub-track to a
+  // frame of the real Today page (frame-000 … frame-026), all preloaded so the
+  // swap is instant. Falls back to a single static frame if reduced motion.
+  (function () {
+    var TOTAL = 27;
+    var img = document.getElementById('scrubImg');
+    var track = document.querySelector('.scrub-track');
+    if (!img || !track) return;
+
+    var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    var frames = [];
+    for (var i = 0; i < TOTAL; i++) {
+      var n = ('00' + i).slice(-3);
+      var url = '/scrub/frame-' + n + '.jpg';
+      var im = new Image();
+      im.src = url;
+      frames.push(url);
+    }
+    if (reduce) { img.src = frames[Math.floor(TOTAL / 2)]; return; }
+
+    var current = 0, ticking = false;
+    function update() {
+      ticking = false;
+      var rect = track.getBoundingClientRect();
+      var vh = window.innerHeight || document.documentElement.clientHeight;
+      // progress: 0 when the track top hits the viewport top, 1 when its
+      // bottom (minus one viewport) has scrolled past.
+      var scrollable = rect.height - vh;
+      var progress = scrollable > 0 ? (-rect.top) / scrollable : 0;
+      progress = Math.max(0, Math.min(1, progress));
+      var idx = Math.min(TOTAL - 1, Math.round(progress * (TOTAL - 1)));
+      if (idx !== current) { current = idx; img.src = frames[idx]; }
+    }
+    function onScroll() { if (!ticking) { ticking = true; requestAnimationFrame(update); } }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    window.addEventListener('resize', onScroll, { passive: true });
+    update();
+  })();
+</script>
 
 <!-- ===== TRUST STRIP ===== -->
 <section style="background:#fff; padding:46px 24px; border-bottom:1px solid #F2F0F3;">
@@ -268,33 +289,28 @@ const canonical = new URL("/", Astro.site).href;
     <h2 style="font-family:'Philosopher',serif; font-weight:700; font-size:clamp(32px,5vw,52px); line-height:1.06; letter-spacing:-0.02em; margin:0; color:#fff;">One calm surface for the whole team.</h2>
   </div>
   <div data-reveal class="gallery-grid" style="opacity:0; transform:translateY(30px); transition:all .9s cubic-bezier(0.16,1,0.3,1); max-width:1100px; margin:0 auto; display:grid; grid-template-columns:repeat(3,1fr); gap:20px;">
-    <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; overflow:hidden;">
-      <div style="height:200px; padding:20px; background:linear-gradient(160deg,#1F2230,#16161C);">
-        <div style="font-size:11px; color:rgba(255,255,255,0.5);">TREATMENT FUNNEL</div>
-        <div style="display:flex; align-items:flex-end; gap:8px; height:130px; margin-top:14px;">
-          <div style="flex:1; background:#69C9CC; height:100%; border-radius:6px 6px 0 0; transform-origin:bottom; animation:ao-bar 1s ease-out;"></div>
-          <div style="flex:1; background:#67A4A1; height:74%; border-radius:6px 6px 0 0; transform-origin:bottom; animation:ao-bar 1s ease-out .1s;"></div>
-          <div style="flex:1; background:#5A908E; height:52%; border-radius:6px 6px 0 0; transform-origin:bottom; animation:ao-bar 1s ease-out .2s;"></div>
-          <div style="flex:1; background:#696C8B; height:38%; border-radius:6px 6px 0 0; transform-origin:bottom; animation:ao-bar 1s ease-out .3s;"></div>
-        </div>
-      </div>
+    <div class="shot-card">
+      <div class="shot-view"><img src="/product/02-people-funnel.jpg" alt="Treatment funnel screen" width="1440" height="900" loading="lazy" decoding="async"></div>
       <div style="padding:18px;"><div style="font-weight:700; font-size:16px;">Live treatment funnel</div><div style="font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;">Exam → consult → contract → start, with aging anomalies flagged.</div></div>
     </div>
-    <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; overflow:hidden;">
-      <div style="height:200px; padding:20px; background:linear-gradient(160deg,#1F2230,#16161C); display:flex; flex-direction:column; gap:9px; justify-content:center;">
-        <div style="height:14px; border-radius:7px; background:linear-gradient(90deg,rgba(105,201,204,0.15),rgba(105,201,204,0.4),rgba(105,201,204,0.15)); background-size:200% 100%; animation:ao-shimmer 2.4s linear infinite; width:90%;"></div>
-        <div style="height:14px; border-radius:7px; background:linear-gradient(90deg,rgba(105,201,204,0.15),rgba(105,201,204,0.4),rgba(105,201,204,0.15)); background-size:200% 100%; animation:ao-shimmer 2.4s linear infinite .2s; width:70%;"></div>
-        <div style="height:14px; border-radius:7px; background:linear-gradient(90deg,rgba(105,201,204,0.15),rgba(105,201,204,0.4),rgba(105,201,204,0.15)); background-size:200% 100%; animation:ao-shimmer 2.4s linear infinite .4s; width:80%;"></div>
-        <div style="margin-top:8px; align-self:flex-start; font-size:12px; font-weight:700; color:#16161C; background:#69C9CC; padding:7px 14px; border-radius:980px;">✦ Ask Artemis</div>
-      </div>
-      <div style="padding:18px;"><div style="font-weight:700; font-size:16px;">Ask in plain English</div><div style="font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;">Type or speak. Answers from live Cloud 9 data in seconds.</div></div>
+    <div class="shot-card">
+      <div class="shot-view"><img src="/product/06-people-insurance-check.jpg" alt="Insurance eligibility screen" width="1440" height="900" loading="lazy" decoding="async"></div>
+      <div style="padding:18px;"><div style="font-weight:700; font-size:16px;">Insurance, verified overnight</div><div style="font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;">Form submissions, eligibility checks and claims — in one place.</div></div>
     </div>
-    <div style="background:rgba(255,255,255,0.04); border:1px solid rgba(255,255,255,0.1); border-radius:16px; overflow:hidden;">
-      <div style="height:200px; padding:20px; background:linear-gradient(160deg,#1F2230,#16161C); display:flex; flex-direction:column; gap:10px; justify-content:center;">
-        <div style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.06); border-radius:10px; padding:11px;"><span style="width:8px;height:8px;border-radius:50%;background:#69C9CC; animation:ao-pulse 1.6s ease-in-out infinite;"></span><span style="font-size:12px; color:rgba(255,255,255,0.8);">Insurance verified overnight</span></div>
-        <div style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.06); border-radius:10px; padding:11px;"><span style="width:8px;height:8px;border-radius:50%;background:#69C9CC; animation:ao-pulse 1.6s ease-in-out infinite .5s;"></span><span style="font-size:12px; color:rgba(255,255,255,0.8);">Day reconciled · 0 discrepancies</span></div>
-        <div style="display:flex; align-items:center; gap:10px; background:rgba(255,255,255,0.06); border-radius:10px; padding:11px;"><span style="width:8px;height:8px;border-radius:50%;background:#ED83D1; animation:ao-pulse 1.6s ease-in-out infinite 1s;"></span><span style="font-size:12px; color:rgba(255,255,255,0.8);">3 actions awaiting sign-off</span></div>
-      </div>
+    <div class="shot-card">
+      <div class="shot-view"><img src="/product/16-money.jpg" alt="Money / cash flow screen" width="1440" height="900" loading="lazy" decoding="async"></div>
+      <div style="padding:18px;"><div style="font-weight:700; font-size:16px;">Cash flow &amp; AR, at a glance</div><div style="font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;">Collections, production and aging buckets without a spreadsheet.</div></div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-view"><img src="/product/09-growth-social-reels.jpg" alt="Social planner and content generation screen" width="1440" height="900" loading="lazy" decoding="async"></div>
+      <div style="padding:18px;"><div style="font-weight:700; font-size:16px;">Social, planned &amp; generated</div><div style="font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;">Plan the calendar, generate the content, post across channels.</div></div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-view"><img src="/product/19-operations.jpg" alt="Operations and chair utilization screen" width="1440" height="900" loading="lazy" decoding="async"></div>
+      <div style="padding:18px;"><div style="font-weight:700; font-size:16px;">Operations, in view</div><div style="font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;">Chair utilization, the people roster and the day's workload.</div></div>
+    </div>
+    <div class="shot-card">
+      <div class="shot-view"><img src="/product/25-automations.jpg" alt="Automations and job schedules screen" width="1440" height="900" loading="lazy" decoding="async"></div>
       <div style="padding:18px;"><div style="font-weight:700; font-size:16px;">Automations, supervised</div><div style="font-size:13px; color:rgba(255,255,255,0.55); margin-top:4px;">Runs the busywork overnight. Holds anything that touches a patient.</div></div>
     </div>
   </div>

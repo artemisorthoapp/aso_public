@@ -1,6 +1,5 @@
 ---
 import Base from "../layouts/Base.astro";
-import FeatureMock from "../components/FeatureMock.astro";
 
 const features = [
   {
@@ -8,30 +7,40 @@ const features = [
     title: "A briefing that thinks for you",
     body: "Every morning, Artemis reads the overnight changes and assembles a role-aware briefing: the exams that need confirming, the contracts aging past threshold, and the quiet wins worth celebrating.",
     points: ["Role-aware (Doctor, OM, TC, Coordinator)", "What changed / what's next", "Anomaly-driven, not noise"],
+    img: "/product/01-today.jpg",
+    alt: "The Artemis Today briefing screen",
   },
   {
     verb: "People",
     title: "The treatment funnel, end to end",
     body: "Follow every patient from new lead through exam, consult, and signed contract. See where people are aging and the exact case value sitting at each stage.",
     points: ["Per-stage counts + aging flags", "Pipeline value by case", "Drill into any patient"],
+    img: "/product/02-people-funnel.jpg",
+    alt: "The treatment funnel screen",
   },
   {
     verb: "Growth",
     title: "Know what's actually driving starts",
     body: "A channel scoreboard ties leads, referrals, reviews, and campaigns back to the starts they produce — so marketing spend follows results.",
     points: ["Lead + referral tracking", "Review campaigns", "Local SEO & GMB signals"],
+    img: "/product/09-growth-social-reels.jpg",
+    alt: "The Growth social planner and content screen",
   },
   {
     verb: "Money",
     title: "Production, collections, and AR — straight",
     body: "Daily and monthly production against target, cash flow, and AR aging broken down by payer. The honest financial picture, continuously updated.",
     points: ["Production vs. target", "AR aging 30/60/90 by payer", "Cash flow at a glance"],
+    img: "/product/16-money.jpg",
+    alt: "The Money cash flow and AR screen",
   },
   {
     verb: "Operations",
     title: "Chairs, schedule, and team",
     body: "Chair-utilization heatmaps by doctor, no-show rates over a rolling 30 days, and the staffing picture behind every day on the calendar.",
     points: ["Chair utilization heatmap", "Rolling 30-day no-show rate", "People roster & scheduling"],
+    img: "/product/19-operations.jpg",
+    alt: "The Operations chair-utilization screen",
   },
 ];
 ---
@@ -69,8 +78,13 @@ const features = [
             ))}
           </ul>
         </div>
-        <div class="aspect-[4/3]">
-          <FeatureMock verb={f.verb} />
+        <div class="overflow-hidden rounded-xl border border-brand-100 bg-brand-50 shadow-sm">
+          <div class="flex items-center gap-1.5 border-b border-brand-100 bg-white px-3 py-2">
+            <span class="h-2.5 w-2.5 rounded-full bg-[#FF5F57]"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-[#FEBC2E]"></span>
+            <span class="h-2.5 w-2.5 rounded-full bg-[#28C840]"></span>
+          </div>
+          <img src={f.img} alt={f.alt} width="1440" height="900" loading="lazy" decoding="async" class="block aspect-[16/10] w-full object-cover object-top" />
         </div>
       </article>
     ))}
