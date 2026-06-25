@@ -41,6 +41,7 @@ export async function onRequestPost(context) {
     last_name: str("last_name"),
     practice: str("practice"),
     email: str("email"),
+    phone: str("phone"),
     plan: PLANS.has(str("plan").toLowerCase()) ? str("plan").toLowerCase() : "growth",
   };
 
